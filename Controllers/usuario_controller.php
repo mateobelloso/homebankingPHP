@@ -4,6 +4,9 @@
 		public function __construct(){}
  
 		public function index(){
+			$listaUsuarios =[];
+			$db=Db::getConnect();
+			$sql=$db->query('SELECT * FROM usuarios');
 			echo 'index desde UsuarioController';
 		}
  
