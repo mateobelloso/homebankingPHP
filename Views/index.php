@@ -7,9 +7,11 @@
 		<tr>			
 			<td>Ingresar Usuarios</td>
 			<td>Ver Usuarios</td>
-			<td><?php $listaUsuarios[1] ?></td>
+			<?php foreach ($usuarios as $usuario) { ?>
+			<td><?php $usuario->nombre; ?></td>
+		<?php } ?>
 		</tr>
 	</table>
-	<?php require_once('routes.php'); ?>
+	
 </body>
 </html>

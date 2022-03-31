@@ -9,5 +9,5 @@
 		$action='index';
 	}	
 	//carga la vista layout.php
-	require_once('Views/index.php');
+	require_once('routes.php');
 ?>

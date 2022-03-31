@@ -1,13 +1,16 @@
 <?php 
+
+	require_once('Models/Usuario.php');
+
 	class UsuarioController
 	{	
 		public function __construct(){}
  
 		public function index(){
-			$listaUsuarios =[];
-			$db=Db::getConnect();
-			$sql=$db->query('SELECT * FROM usuarios');
-			echo 'index desde UsuarioController';
+			$usuarios= Usuario::all();
+			echo "Controlador";
+			require_once('Views/index.php');
+			//return $usuarios;
 		}
  
 		public function register(){
