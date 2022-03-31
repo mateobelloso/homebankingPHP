@@ -33,7 +33,7 @@ class Usuario
 		$result= mysqli_query($db,"SELECT * FROM usuarios") or die('Query invalido: '.mysqli_error().'\n');
 		//mysqli_free_result($result);
 		while ($row=mysqli_fetch_array($result)) {
-			$listaUsuarios= new Usuario($row['id'],$row['nombre'],$row['apellido'],$row['nombre_usuario'],$row['clave'],$row['dni'],$row['tipo'],$row['cambio_clave']);
+			$listaUsuarios[]= new Usuario($row['id'],$row['nombre'],$row['apellido'],$row['nombre_usuario'],$row['clave'],$row['dni'],$row['tipo'],$row['cambio_clave']);
 		}
 		return $listaUsuarios;
 	}

@@ -8,7 +8,7 @@
 			<td>Ingresar Usuarios</td>
 			<td>Ver Usuarios</td>
 			<?php foreach ($usuarios as $usuario) { ?>
-			<td><?php $usuario->nombre; ?></td>
+			<td><?php echo $usuario->nombre; ?></td>
 		<?php } ?>
 		</tr>
 	</table>
