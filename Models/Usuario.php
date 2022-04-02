@@ -1,6 +1,6 @@
 <?php
 
-require_once('connection.php');
+require_once('../connection.php');
 
 class Usuario
 {
@@ -14,7 +14,7 @@ class Usuario
 	public $tipo;
 	public $cambio_clave;
 
-	private $db= Db::connect
+	//sprivate $db= Db::connect();
 
 	function __construct($id,$nombre,$apellido,$nombre_usuario,$clave,$dni,$tipo,$cambio_clave)
 	{
@@ -42,12 +42,18 @@ class Usuario
 
 	public static function autenticacionInicioSesion($usuario)
 	{
-		$result= mysqli_query("SELECT nombre_usuario,clave FROM usuarios WHERE(nombre_usuario==$usuario->nombre_usuario)") or null;
-		if($result != null)
-		{
-		}else
-		{
-			
+		$db= Db::connect();
+		$result= mysqli_query($db,"SELECT * FROM usuarios 
+			WHERE
+			(nombre_usuario='$usuario->nombre_usuario') AND (clave='$usuario->clave')");
+		$result= mysqli_fetch_object($result);
+
+		if ($result!=null){
+			return new Usuario($result->id,$result->nombre,$result->apellido,$result->nombre_usuario,$result->clave,$result->dni,$result->tipo,$result->cambio_clave);
 		}
+		else
+			echo "el usuario no se valido en el modelo";
+		return null;
+
 	}
 }

@@ -3,13 +3,15 @@
 	//función que llama al controlador y su respectiva acción, que son pasados como parámetros
 	function call($controller, $action){
 		//importa el controlador desde la carpeta Controllers
-		require_once('Controllers/' . $controller . '_controller.php');
+		require_once('./Controllers/' . $controller . '_controller.php');
 		//crea el controlador
 		switch($controller){
 			case 'usuario':
 				$controller= new UsuarioController();
-				break; 
- 
+				break;
+			case 'login':
+				$controller= new loginController();	 
+				break;
 		}
 		//llama a la acción del controlador
 		$controller->{$action }();

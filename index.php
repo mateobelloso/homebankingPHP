@@ -5,7 +5,7 @@
 </head>
 <body>
 	<h1>¡Bienvenido!</h1>
-	<form action="Controllers/login_controller" method="post">
+	<form action="Controllers/login_controller.php" method="post">
 		<input type="hidden" name="action" value="sesion">
 		<fieldset>
 			<legend><h2>Inicie sesion</h2></legend>
@@ -16,6 +16,9 @@
 			<input type="submit" value="Iniciar sesion">
 		</fieldset>
 	</form>
+	<?//php $controller= 'login'; 
+	//require_once('routes.php');
+	?>
 	
 </body>
 </html>
