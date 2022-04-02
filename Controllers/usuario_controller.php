@@ -7,27 +7,24 @@
 		public function __construct(){}
  
 		public function index(){
-			$usuarios= Usuario::all();
-			echo "Controlador";
 			require_once('Views/index.php');
 			//return $usuarios;
 		}
- 
-		public function register(){
-			echo 'register desde UsuarioConroller';
+
+		public function sesion($usuario)
+		{
+
 		}
  
-		public function update(){
-			echo 'update desde UsuarioConroller';
- 
-		}
- 
-		public function delete(){
-			echo 'delete desde UsuarioConroller';
-		}
 		
-		public function error(){
-			require_once('Views/Usuario/error.php');
-		} 
+	}
+
+	if (isset($_POST['action'])) {
+		$controller= new UsuarioController();
+		if($_POST['action']=='sesion')
+		{
+			$usuario= new Usuario(null,$_POST['usuario'],$_POST['contraseña'],null,null,null,null,null);
+			$controller->sesion($usuario);
+		}
 	}
 ?>

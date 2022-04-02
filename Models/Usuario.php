@@ -14,6 +14,8 @@ class Usuario
 	public $tipo;
 	public $cambio_clave;
 
+	private $db= Db::connect
+
 	function __construct($id,$nombre,$apellido,$nombre_usuario,$clave,$dni,$tipo,$cambio_clave)
 	{
 		$this->id=$id;
@@ -29,12 +31,23 @@ class Usuario
 	public static function all()
 	{
 		$listaUsuarios= [];
-		$db= Db::connect();
+		//$db= Db::connect();
 		$result= mysqli_query($db,"SELECT * FROM usuarios") or die('Query invalido: '.mysqli_error().'\n');
 		//mysqli_free_result($result);
 		while ($row=mysqli_fetch_array($result)) {
 			$listaUsuarios[]= new Usuario($row['id'],$row['nombre'],$row['apellido'],$row['nombre_usuario'],$row['clave'],$row['dni'],$row['tipo'],$row['cambio_clave']);
 		}
 		return $listaUsuarios;
+	}
+
+	public static function autenticacionInicioSesion($usuario)
+	{
+		$result= mysqli_query("SELECT nombre_usuario,clave FROM usuarios WHERE(nombre_usuario==$usuario->nombre_usuario)") or null;
+		if($result != null)
+		{
+		}else
+		{
+			
+		}
 	}
 }
