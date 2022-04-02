@@ -1,5 +1,4 @@
- 
-	<html>
+<html>
 <head>
 	<title>Bienvenido MVC </title>
 </head>
@@ -10,9 +9,21 @@
 		<fieldset>
 			<legend><h2>Inicie sesion</h2></legend>
 			<label for="usuario">Usuario</label>
-			<input type="text" name="usuario"><br>
+			<input type="text" name="usuario" minlength="6"><br>
 			<label for="contraseña">Contraseña</label>
-			<input type="password" name="contraseña"><br>
+			<input type="password" id="contrasena" name="contraseña" required minlength="6" pattern="[A-Z]{1}[a-z]{1}[0-9]|[@#$%]{1}"><br>
+			<label for="mostrar-contraseña">Mostrar contraseña</label>
+			<input type="checkbox" onclick="mostrarContrasena()" name="mostrar-contraseña">
+			<script>
+  function mostrarContrasena(){
+      var tipo = document.getElementById("password");
+      if(tipo.type == "password"){
+          tipo.type = "text";
+      }else{
+          tipo.type = "password";
+      }
+  }
+</script>
 			<input type="submit" value="Iniciar sesion">
 		</fieldset>
 	</form>
