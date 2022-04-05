@@ -11,7 +11,9 @@ class ClienteController
 
 	public function index()
 	{
-		require_once('../Views/Cliente/index.php');
+		//session_start();
+		require_once("../Views/Cliente/index.php");
+		//header("Location: ../Views/Cliente/index.php");
 	}
 	public function cambioClave()
 	{

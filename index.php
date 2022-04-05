@@ -13,21 +13,23 @@
 			<label for="contraseña">Contraseña</label>
 			<input type="password" id="contrasena" name="contraseña" required pattern= "(?=.*[0-9#$%@])(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe contener al menos una letra mayuscula,una letra minuscula y un numero o un caracter especial."><br>
 			<label for="mostrar-contraseña">Mostrar contraseña</label>
-			<input type="checkbox" onclick="mostrarContrasena()" name="mostrar-contraseña">
+			<input id="checkbox" type="checkbox" onclick="mostrarContrasena()" name="mostrar-contraseña">
 			<script>
   function mostrarContrasena(){
       var tipo = document.getElementById("checkbox");
+      var aux = document.getElementById("contrasena")
       if(tipo.checked == true){
-          tipo.type = "text";
+          aux.type = "text";
       }else{
-          tipo.type = "password";
+          aux.type = "password";
       }
   }
 </script>
 			<input type="submit" value="Iniciar sesion">
 		</fieldset>
 	</form>
-	<?//php $controller= 'login'; 
+	<?//php $controller= 'cliente';
+	//$action= 'index'; 
 	//require_once('routes.php');
 	?>
 	

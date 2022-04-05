@@ -12,6 +12,9 @@
 			case 'login':
 				$controller= new loginController();	 
 				break;
+			case 'cliente':
+				$controller= new ClienteController();	 
+				break;
 		}
 		//llama a la acción del controlador
 		$controller->{$action }();
@@ -19,7 +22,8 @@
  
 	//array con los controladores y sus respectivas acciones
 	$controllers= array(
-						'usuario'=>['index','register','update', 'delete']
+						'usuario'=>['index','register','update', 'delete'],
+						'cliente'=>['index']
 						);
 	//verifica que el controlador enviado desde index.php esté dentro del arreglo controllers
 	if (array_key_exists($controller, $controllers)) {

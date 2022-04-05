@@ -7,13 +7,14 @@ class LoginController
 	public function __construct()
 	{}
 
-	public function autenticacion($usuario)
+	public function autenticacion($user)
 	{
 		//require_once('index.php');
-		if (Usuario::autenticacionInicioSesion($usuario)!= null)
+		$usuario= Usuario::autenticacionInicioSesion($user);
+		if ($usuario!= null)
 		{
 			//Se inicia sesion y se almacenan las variables del usuario en $_SESSION
-			session_start();
+			//session_start();
 			$_SESSION['id'] = $usuario->id;
 			$_SESSION['nombre'] = $usuario->nombre;
 			$_SESSION['apellido'] = $usuario->apellido;
@@ -26,7 +27,6 @@ class LoginController
  			//Determina si el usuario es un admin o un cliente
  			if($_SESSION['tipo']="comun")
  			{
- 				echo "aca";
  				//Determina si es el primer inicio de sesion y debe cambiar la clave
  				if($_SESSION['cambio_clave'])
  				{	
@@ -53,6 +53,29 @@ class LoginController
 	}
 }
 
+echo session_status();
+if(session_status() === 1)
+{
+	session_start();
+	echo session_status();
+	if($_SESSION['tipo']="comun")
+ 	{
+ 		echo "aca";
+ 		//Determina si es el primer inicio de sesion y debe cambiar la clave
+ 		if($_SESSION['cambio_clave'])
+ 		{	
+ 			require_once 'cliente_controller.php';
+ 			$cliente= new ClienteController();
+ 			$cliente->cambioClave();
+ 		}else
+ 		//Muestra el inicio de sesion general
+ 		{
+ 			require_once 'cliente_controller.php';
+ 			$cliente= new ClienteController();
+ 			$cliente->index();
+		}
+	}
+}
 
 // Se inicializa el login controler y se llama a autentificar usuario pasandole el usuario y la contraseña
 if (isset($_POST['action'])) {
@@ -64,4 +87,6 @@ if (isset($_POST['action'])) {
 			$controller->autenticacion($usuario);
 		}
 }
+
+
 ?>
