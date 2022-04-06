@@ -13,16 +13,17 @@ class LoginController
 		$usuario= Usuario::autenticacionInicioSesion($user);
 		if ($usuario!= null)
 		{
-			//Se inicia sesion y se almacenan las variables del usuario en $_SESSION
+			//Se inicia sesion y se almacenan las variables del usuario en $_SESSION['usuario']
 			//session_start();
-			$_SESSION['id'] = $usuario->id;
-			$_SESSION['nombre'] = $usuario->nombre;
-			$_SESSION['apellido'] = $usuario->apellido;
-			$_SESSION['nombre_usuario'] = $usuario->nombre_usuario;
- 			$_SESSION['clave'] = $usuario->clave;
- 			$_SESSION['dni'] = $usuario->dni;
- 			$_SESSION['tipo'] = $usuario->tipo;
- 			$_SESSION['cambio_clave'] = $usuario->cambio_clave;
+			$_SESSION['usuario']= array('id' => $usuario->id,'nombre' => $usuario->nombre, 'apellido' => $usuario->apellido, 'nombre_usuario' => $usuario->nombre_usuario, 'dni' => $usuario->dni, 'tipo' => $usuario->tipo, 'cambio_clave' => $usuario->cambio_clave);
+			// $_SESSION['id'] = $usuario->id;
+			// $_SESSION['nombre'] = $usuario->nombre;
+			// $_SESSION['apellido'] = $usuario->apellido;
+			// $_SESSION['nombre_usuario'] = $usuario->nombre_usuario;
+ 		// 	$_SESSION['clave'] = $usuario->clave;
+ 		// 	$_SESSION['dni'] = $usuario->dni;
+ 		// 	$_SESSION['tipo'] = $usuario->tipo;
+ 		// 	$_SESSION['cambio_clave'] = $usuario->cambio_clave;
  			
  			//Determina si el usuario es un admin o un cliente
  			if($_SESSION['tipo']="comun")
@@ -86,6 +87,16 @@ if (isset($_POST['action'])) {
 			$usuario= new Usuario(null,null,null,$_POST['usuario'],$_POST['contraseña'],null,null,null);
 			$controller->autenticacion($usuario);
 		}
+}
+
+if (isset($_GET['action']))
+{
+	if($_GET['action']=='cerrar')
+	{
+		echo "cerre";
+		header("Location: ../index.php");
+	}
+	//echo $_GET['action'];
 }
 
 
