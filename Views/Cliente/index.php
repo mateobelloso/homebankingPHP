@@ -1,9 +1,10 @@
 <html>
 <head>
-	<title>Bienvenido MVC </title>
+	<!--link rel="stylesheet" href="../Views/styles.css"-->
 </head>
 <body>
-	<h1>¡Bienvenido <?php echo $_SESSION['nombre_usuario'] ?>!</h1>
+	<?php require_once("../Views/header.php"); ?>
+	<h1>¡Bienvenido <?php echo $_SESSION['usuario']['nombre_usuario'] ?>!</h1>
 	<?php echo $_SESSION['usuario']['nombre'] ?>
 	<?php echo $_SESSION['usuario']['apellido'] ?>
 	<?php echo $_SESSION['usuario']['dni'] ?>

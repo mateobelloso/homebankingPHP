@@ -7,6 +7,11 @@ class LoginController
 	public function __construct()
 	{}
 
+	public function index()
+	{
+		header("Location: ../index.php");
+	}
+
 	public function autenticacion($user)
 	{
 		//require_once('index.php');
@@ -26,10 +31,10 @@ class LoginController
  		// 	$_SESSION['cambio_clave'] = $usuario->cambio_clave;
  			
  			//Determina si el usuario es un admin o un cliente
- 			if($_SESSION['tipo']="comun")
+ 			if($_SESSION['usuario']['tipo']="comun")
  			{
  				//Determina si es el primer inicio de sesion y debe cambiar la clave
- 				if($_SESSION['cambio_clave'])
+ 				if($_SESSION['usuario']['cambio_clave'])
  				{	
  					require_once 'cliente_controller.php';
  					$cliente= new ClienteController();
@@ -48,32 +53,38 @@ class LoginController
  			//require_once('../Views/Cliente/index.php');
  			echo"se inicio sesion";
 		}else{
-			echo "error al validar contraseña";
+			require_once('../index.php');
+			echo '<div class="error"><h2>Error al iniciar sesion:</h2><span>- Nombre de usuario o contraseña incorrecta </span></div>';
 		}
 
 	}
 }
 
-echo session_status();
-if(session_status() === 1)
+//Si hay una sesion
+if(session_status())
 {
 	session_start();
-	echo session_status();
-	if($_SESSION['tipo']="comun")
- 	{
- 		echo "aca";
- 		//Determina si es el primer inicio de sesion y debe cambiar la clave
- 		if($_SESSION['cambio_clave'])
- 		{	
- 			require_once 'cliente_controller.php';
- 			$cliente= new ClienteController();
- 			$cliente->cambioClave();
- 		}else
- 		//Muestra el inicio de sesion general
- 		{
- 			require_once 'cliente_controller.php';
- 			$cliente= new ClienteController();
- 			$cliente->index();
+	//Inicializa la sesion y pregunta si hay un usuario cargado (osea la sesion ya esta iniciada)
+	if (isset($_SESSION['usuario']))
+	{
+		if($_SESSION['usuario']['tipo']="comun")
+	 	{
+	 		//Determina si es el primer inicio de sesion y debe cambiar la clave
+	 		if($_SESSION['usuario']['cambio_clave'])
+	 		{	
+	 			require_once 'cliente_controller.php';
+	 			$cliente= new ClienteController();
+	 			$cliente->cambioClave();
+	 		}else
+	 		//Muestra el inicio de sesion general
+	 		{
+	 			require_once 'cliente_controller.php';
+	 			$cliente= new ClienteController();
+	 			$cliente->index();
+	 			// $controller= 'cliente';
+	 			// $action= 'index';
+	 			// require_once('../routes.php');
+			}
 		}
 	}
 }
@@ -89,15 +100,15 @@ if (isset($_POST['action'])) {
 		}
 }
 
+//Si me pasaron un parametro a traves de la url (GET) mira que accion es y ejecuta la funcion correspondiente
 if (isset($_GET['action']))
 {
 	if($_GET['action']=='cerrar')
 	{
-		echo "cerre";
-		header("Location: ../index.php");
+		unset($_SESSION['usuario']);
+		$controller= new LoginController();
+		$controller->index();
 	}
-	//echo $_GET['action'];
 }
-
 
 ?>

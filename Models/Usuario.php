@@ -51,8 +51,6 @@ class Usuario
 		if ($result!=null){
 			return new Usuario($result->id,$result->nombre,$result->apellido,$result->nombre_usuario,$result->clave,$result->dni,$result->tipo,$result->cambio_clave);
 		}
-		else
-			echo "el usuario no se valido en el modelo";
 		return null;
 
 	}

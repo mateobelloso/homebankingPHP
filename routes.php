@@ -23,7 +23,7 @@
 	//array con los controladores y sus respectivas acciones
 	$controllers= array(
 						'usuario'=>['index','register','update', 'delete'],
-						'cliente'=>['index']
+						'cliente'=>['index', 'cambioClave']
 						);
 	//verifica que el controlador enviado desde index.php esté dentro del arreglo controllers
 	if (array_key_exists($controller, $controllers)) {
