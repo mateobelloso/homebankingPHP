@@ -1,5 +1,5 @@
 <style>
-	.error {
+	#error {
 		color: red;
 		background-color: #F1948A;
 		padding: 0;
@@ -10,11 +10,11 @@
 
 	form {
 		margin: 0;
-		width: 50vw;
+		width: 30vw;
 		padding: 1em;
 		border: 5px solid blue;
 		border-radius: 1em;
-		margin-left: 25vw;
+		margin-left: 35vw;
 	}
 
 	button {
@@ -22,7 +22,7 @@
 		background-color: #2980B9;
 		color: white;
 		padding: 1em;
-		margin-left: 20vw;
+		margin-left: 15vw;
 	}
 
 	ul {
@@ -37,12 +37,16 @@
 
 	label {
 		display: inline-block;
-		width: 125px;
+		width: 80px;
 		text-align: left;
 	}
 
 	#mostrar-contraseña {
-		margin-left: 20vw;
+		margin-left: 15vw;
+	}
+
+	#label-mostrar-contraseña {
+		width: 124px;
 	}
 
 </style>
@@ -56,6 +60,11 @@
       }else{
           aux.type = "password";
       }
+  }
+
+  function mensajeError(){
+  	var error= document.getElementById("error");
+  	error.style.visibility= "visible";
   }
 </script>
 
@@ -78,13 +87,16 @@
 				<input type="password" id="contrasena" name="contraseña" required pattern= "(?=.*[0-9#$%@])(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe contener al menos una letra mayuscula,una letra minuscula y un numero o un caracter especial.">
 				</li>
 				<li id="mostrar-contraseña"><input id="checkbox" type="checkbox" onclick="mostrarContrasena()" name="mostrar-contraseña">
-				<label for="mostrar-contraseña">Mostrar contraseña</label>
+				<label id="label-mostrar-contraseña" for="mostrar-contraseña">Mostrar contraseña</label>
 				</li>
 				<li><button class="button" type="submit">Iniciar sesion </button> </li>
 			</ul>
 		</fieldset>
 	</form>
-	<!--span class="error">Probando el error</span-->
+	<div id="error" style="visibility: hidden;">
+		<h2>Error al iniciar sesion:</h2>
+		<span>- Nombre de usuario o contraseña incorrecta </span>
+	</div>
 	<?//php $controller= 'cliente';
 	//$action= 'index'; 
 	//require_once('routes.php');
