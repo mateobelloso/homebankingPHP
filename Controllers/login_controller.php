@@ -53,8 +53,10 @@ class LoginController
  			//require_once('../Views/Cliente/index.php');
  			echo"se inicio sesion";
 		}else{
-			require_once('../index.php');
-			echo "<script> mensajeError(); </script>"; 
+			//require_once('../index.php');
+			$_SESSION['error-inicio']= "<script> mensajeError(); </script>";
+			header("Location: ../index.php");
+			//echo "<script> mensajeError(); </script>"; 
 			//echo '<div class="error"><h2>Error al iniciar sesion:</h2><span>- Nombre de usuario o contraseña incorrecta </span></div>';
 		}
 

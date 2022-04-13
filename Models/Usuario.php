@@ -14,7 +14,7 @@ class Usuario
 	public $tipo;
 	public $cambio_clave;
 
-	//sprivate $db= Db::connect();
+	private $db;
 
 	function __construct($id,$nombre,$apellido,$nombre_usuario,$clave,$dni,$tipo,$cambio_clave)
 	{
@@ -26,6 +26,7 @@ class Usuario
 		$this->dni=$dni;
 		$this->tipo=$tipo;
 		$this->cambio_clave=$cambio_clave;
+		$this->db= Db::connect();
 	}
 
 	public static function all()
@@ -42,8 +43,8 @@ class Usuario
 
 	public static function autenticacionInicioSesion($usuario)
 	{
-		$db= Db::connect();
-		$result= mysqli_query($db,"SELECT * FROM usuarios 
+		//$db= Db::connect();
+		$result= mysqli_query($usuario->db,"SELECT * FROM usuarios 
 			WHERE
 			(nombre_usuario='$usuario->nombre_usuario') AND (clave='$usuario->clave')");
 		$result= mysqli_fetch_object($result);
@@ -53,5 +54,11 @@ class Usuario
 		}
 		return null;
 
+	}
+
+	public static function cambiarContraseña($usuario)
+	{
+		//$db= Db::connect();
+		mysqli_query($usuario->db,"UPDATE usuarios SET clave = '$usuario->clave' WHERE usuarios.id = '$usuario->id'");
 	}
 }

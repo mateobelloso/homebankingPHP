@@ -97,6 +97,14 @@
 		<h2>Error al iniciar sesion:</h2>
 		<span>- Nombre de usuario o contraseña incorrecta </span>
 	</div>
+	<?php 
+		session_start();
+		if(isset($_SESSION['error-inicio']))
+		{
+			echo $_SESSION['error-inicio'];
+			unset($_SESSION['error-inicio']);
+		}
+	?>
 	<?//php $controller= 'cliente';
 	//$action= 'index'; 
 	//require_once('routes.php');
