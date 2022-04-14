@@ -63,9 +63,23 @@ class LoginController
 	}
 }
 
+//Si me pasaron un parametro a traves de la url (GET) mira que accion es y ejecuta la funcion correspondiente
+if (isset($_GET['action']))
+{
+	if($_GET['action']=='cerrar')
+	{
+		unset($_SESSION['usuario']);
+		session_start();
+		//session_destroy();
+		$controller= new LoginController();
+		$controller->index();
+	}
+}
+
 //Si hay una sesion
 if(session_status())
 {
+
 	session_start();
 	//Inicializa la sesion y pregunta si hay un usuario cargado (osea la sesion ya esta iniciada)
 	if (isset($_SESSION['usuario']))
@@ -92,6 +106,7 @@ if(session_status())
 	}
 }
 
+
 // Se inicializa el login controler y se llama a autentificar usuario pasandole el usuario y la contraseña
 if (isset($_POST['action'])) {
 		$controller= new LoginController();
@@ -103,15 +118,6 @@ if (isset($_POST['action'])) {
 		}
 }
 
-//Si me pasaron un parametro a traves de la url (GET) mira que accion es y ejecuta la funcion correspondiente
-if (isset($_GET['action']))
-{
-	if($_GET['action']=='cerrar')
-	{
-		unset($_SESSION['usuario']);
-		$controller= new LoginController();
-		$controller->index();
-	}
-}
+
 
 ?>

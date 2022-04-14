@@ -94,6 +94,8 @@
 </script>
 
 <html>
+<head>
+</head>
 <body>
 	<?php require_once('../Views/header.php'); ?>
 	<h1>Cambie su contraseña</h1>

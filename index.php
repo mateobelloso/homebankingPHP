@@ -98,7 +98,7 @@
 		<span>- Nombre de usuario o contraseña incorrecta </span>
 	</div>
 	<?php 
-		session_start();
+		//session_start();
 		//Si tengo un parametro de error de inicio en SESSION significa que ya quisieron ingresar y fallo. Muestro el mensaje de error
 		if(isset($_SESSION['error-inicio']))
 		{

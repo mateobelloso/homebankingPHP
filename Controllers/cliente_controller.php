@@ -26,6 +26,7 @@ class ClienteController
 		//Si la contraseña actual ingresada es igual a la del usuario activo realizo la actualizacion de contraseña
 		if($contraseñaActual === $_SESSION['usuario']['clave'])
 		{
+			$_SESSION['usuario']['cambio_clave']= 0;
 			$usuario->cambio_clave= 0;
 			$usuario->id= $_SESSION['usuario']['id'];
 			Usuario::cambiarContraseña($usuario);
@@ -33,6 +34,7 @@ class ClienteController
 		}else
 		{
 			//La contraseña actual no coincide
+			echo "Entra al false";
 		}
 	}
 
@@ -60,4 +62,3 @@ if (isset($_POST['action'])) {
 	}
 }
 ?>
-

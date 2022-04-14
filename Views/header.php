@@ -1,13 +1,13 @@
 <style >
 	#main-header {
-	background: #13026F;
-	color: #ECF0F1;
-	height: 80px;
-	
-	width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-	left: 0; /* Posicionamos la cabecera al lado izquierdo */
-	top: 0; /* Posicionamos la cabecera pegada arriba */
-	position: flex; /* Hacemos que la cabecera tenga una posición fija */
+		background: #13026F;
+		color: #ECF0F1;
+		height: 80px;
+		
+		width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+		left: 0; /* Posicionamos la cabecera al lado izquierdo */
+		top: 0; /* Posicionamos la cabecera pegada arriba */
+		position: flex; /* Hacemos que la cabecera tenga una posición fija */
 	}	
 	#main-header a {
 		color: white;
@@ -64,8 +64,6 @@
 					}
 	}
 </style>
-
-
 <html>
   <head>
     <title>Bienvenido a Banco X</title>
