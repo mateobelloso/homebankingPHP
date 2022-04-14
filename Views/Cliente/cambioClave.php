@@ -1,4 +1,6 @@
 <style>
+	
+	/*Estitica del formulario*/
 	form {
 		margin: 0;
 		width: 30vw;
@@ -6,7 +8,7 @@
 		margin-left: 1vw;
 		margin-top: 1vw;
 	}
-
+	/*Estitica del boton de cambiar contraseña*/
 	button {
 		border-radius: 50px;
 		background-color: #2980B9;
@@ -24,22 +26,24 @@
 	form li + li {
 		margin-top: 1em;
 	}
-
+	/*Ordenacion del formulario */
 	label {
 		display: inline-block;
 		width: 180px;
 		text-align: left;
 	}
-
+	/*Estilo ROJO para el campo INCORRECTO, si ingresan algun valor*/
 	.error-border {
-		background-color: #FDD;
+		background-color: #F86157;
 		border-color: #900;
 	}
+	/*Estilo VERDE para campo CORRECTO, si ingresan algun valor*/
 	.correcto-border {
 		background-color: #5CF06C;
 		border-color: #00A411;
 	}
-
+	/*Estilo ROJO para campo INCORRECTO, 
+	"Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial"*/
 	.error-contraseñas {
 		color: black;
 		background-color: #FDD;
@@ -50,8 +54,10 @@
 	}
 </style>
 <script>
+	//Funcion que chequea todos los parametros que debe cumplir la contraseña 
+
 	function chequeo()
-	{
+	{	
 		const regContraseña= /(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/;	//Variable que va a controlar que la contraseña cumpla con el formato pedido
 		const contrasena= document.getElementById("contrasena-nueva");	//Almacena el elemento html con el id contrasena-nueva
 		const contrasena2= document.getElementById("contrasena-nueva2");	//Almacena el elemento html con el id contrasena-nueva2
@@ -97,9 +103,13 @@
 <head>
 </head>
 <body>
-	<?php require_once('../Views/header.php'); ?>
+
+	<!--Formulario en HTML para el cambio de contraseña  -->
+	<?php require_once('../Views/header.php'); ?> <!--Se llama al header -->
 	<h1>Cambie su contraseña</h1>
-	<form name="formulario" action="cliente_controller.php" method="post" onsubmit="return chequeo()">
+
+	<form name="formulario" action="cliente_controller.php" method="post" onsubmit="return chequeo()"> 
+		<!--Return Chequeo: Llama a la funcion chequeo que verifica las validaciones necesarias para enviar el forumalario al cliente controller -->
 		<input type="hidden" name="action" value="cambio-password">
 		<ul>
 			<li><label for="contrasena-actual">Contraseña Actual:</label><input type="password" id="contrasena-actual" name="contrasena-actual"></li>

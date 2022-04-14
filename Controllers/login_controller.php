@@ -21,17 +21,9 @@ class LoginController
 			//Se inicia sesion y se almacenan las variables del usuario en $_SESSION['usuario']
 			//session_start();
 			$_SESSION['usuario']= array('id' => $usuario->id,'nombre' => $usuario->nombre, 'apellido' => $usuario->apellido, 'nombre_usuario' => $usuario->nombre_usuario,'clave' => $usuario->clave, 'dni' => $usuario->dni, 'tipo' => $usuario->tipo, 'cambio_clave' => $usuario->cambio_clave);
-			// $_SESSION['id'] = $usuario->id;
-			// $_SESSION['nombre'] = $usuario->nombre;
-			// $_SESSION['apellido'] = $usuario->apellido;
-			// $_SESSION['nombre_usuario'] = $usuario->nombre_usuario;
- 		// 	$_SESSION['clave'] = $usuario->clave;
- 		// 	$_SESSION['dni'] = $usuario->dni;
- 		// 	$_SESSION['tipo'] = $usuario->tipo;
- 		// 	$_SESSION['cambio_clave'] = $usuario->cambio_clave;
  			
  			//Determina si el usuario es un admin o un cliente
- 			if($_SESSION['usuario']['tipo']="comun")
+ 			if($_SESSION['usuario']['tipo']=="comun")
  			{
  				//Determina si es el primer inicio de sesion y debe cambiar la clave
  				if($_SESSION['usuario']['cambio_clave'])
@@ -49,14 +41,24 @@ class LoginController
  					$cliente->index();
 
  				}
- 			}
+ 			}else
+ 				{	
+ 					require_once 'administrador_controller.php';
+ 					$administrador= new AdministradorController();
+ 					$administrador->index();
+
+ 				}
+
  			//require_once('../Views/Cliente/index.php');
- 			echo"se inicio sesion";
 		}else{
 			//require_once('../index.php');
+
+			//Se imprime el mensaje de error de inicio de sesion con 
 			$_SESSION['error-inicio']= "<script> mensajeError(); </script>";
 			header("Location: ../index.php");
-			//echo "<script> mensajeError(); </script>"; 
+			
+			//Otra forma de imprimir el error
+
 			//echo '<div class="error"><h2>Error al iniciar sesion:</h2><span>- Nombre de usuario o contraseña incorrecta </span></div>';
 		}
 
@@ -68,9 +70,9 @@ if (isset($_GET['action']))
 {
 	if($_GET['action']=='cerrar')
 	{
+		//Sesion start para solucionar el error de guardar el valor anterior
 		session_start();
-		unset($_SESSION['usuario']);
-		//session_destroy();
+		unset($_SESSION['usuario']);	//Se borra la informacion del usuario que inicio sesion (Cierra su sesion) 
 		$controller= new LoginController();
 		$controller->index();
 	}
@@ -79,12 +81,11 @@ if (isset($_GET['action']))
 //Si hay una sesion
 if(session_status())
 {
-
 	session_start();
 	//Inicializa la sesion y pregunta si hay un usuario cargado (osea la sesion ya esta iniciada)
 	if (isset($_SESSION['usuario']))
 	{
-		if($_SESSION['usuario']['tipo']="comun")
+		if($_SESSION['usuario']['tipo']=="comun")
 	 	{
 	 		//Determina si es el primer inicio de sesion y debe cambiar la clave
 	 		if($_SESSION['usuario']['cambio_clave'])
@@ -102,10 +103,21 @@ if(session_status())
 	 			// $action= 'index';
 	 			// require_once('../routes.php');
 			}
+		}else
+ 			{	
+ 			require_once 'administrador_controller.php';
+ 			$administrador= new AdministradorController();
+ 			$administrador->index();
+ 			}
+	}else{
+		//Se hace asi para evitar un error, en caso de apretar el inicio del banco recarga la pagina de inicio
+
+		if(!isset($_POST['action']))
+		{
+			header("Location: ../index.php");
 		}
 	}
 }
-
 
 // Se inicializa el login controler y se llama a autentificar usuario pasandole el usuario y la contraseña
 if (isset($_POST['action'])) {

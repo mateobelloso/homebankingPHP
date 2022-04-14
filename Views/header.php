@@ -30,8 +30,6 @@
 			font-weight: 1000;
 			font-size: 3em;
 		}
-		
-
 	/*
 	 * Navegación
 	 */
@@ -72,7 +70,7 @@
   <body>
       <header id="main-header">
 		
-		<a id="logo-header" href="#">
+		<a id="logo-header" href="/hb/Controllers/login_controller.php">
 			<span class="site-name">BANCO</span>
 		</a> <!-- / #logo-header -->
 
@@ -81,7 +79,8 @@
 				<li><a href="#">Inicio</a></li>
 				<li><a href="#">Acerca de</a></li>
 				<li><a href="#">Contacto</a></li>
-				<?php if(isset($_SESSION['usuario'])) { ?>
+				<!--Se verifica que el usuario tenga la sesion iniciada para mostrar el cerrar sesion -->
+				<?php if(isset($_SESSION['usuario'])) { ?> 
 				<li><a id="boton" href="login_controller.php?action=cerrar">Cerrar sesion</a></li>
 				<?php } ?>
 			</ul>

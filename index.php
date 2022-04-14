@@ -1,13 +1,15 @@
 <style>
+
+	/*Estetica mensaje de error al iniciar sesion con valores incorrectos  */
 	#error {
-		color: red;
-		background-color: #F1948A;
+		color: black;
+		background-color: #F86157;
 		padding: 0;
 		margin-left: 25vw;
 		text-align: left;
 		width: 50vw;
 	}
-
+	/*Recuadro azul y el formulario de login */
 	form {
 		margin: 0;
 		width: 30vw;
@@ -17,7 +19,7 @@
 		margin-left: 35vw;
 		margin-top: 10vw;
 	}
-
+	/*Estetica boton de iniciar sesion */
 	button {
 		border-radius: 50px;
 		background-color: #2980B9;
@@ -53,6 +55,7 @@
 </style>
 
 <script>
+	// Funcion para mostrar la contraseña 
   function mostrarContrasena(){
       var tipo = document.getElementById("checkbox");
       var aux = document.getElementById("contrasena")
@@ -62,7 +65,7 @@
           aux.type = "password";
       }
   }
-
+  // Mensaje de error de inicio de sesion
   function mensajeError(){
   	var error= document.getElementById("error");
   	error.style.visibility= "visible";
@@ -74,19 +77,25 @@
 	<!--link rel="stylesheet" href="Views/styles.css"-->
 </head>
 <body>
+		
+
+
+
 	<?php require_once("Views/header.php"); ?>
+	<?php session_start();?>
 	<form action="Controllers/login_controller.php" method="post">
 		<input type="hidden" name="action" value="sesion">
 		<fieldset>
 			<legend><h2>Iniciar sesión</h2></legend>
 			<ul>
 				<li><label for="usuario">Usuario</label>
-				<input type="text" name="usuario" minlength="6" required>
+				<input type="text" name="usuario">
 				</li>
 				<li><label for="contraseña">Contraseña</label>
-				<input type="password" id="contrasena" name="contraseña" required pattern= "(?=.*[0-9#$%@])(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe contener al menos una letra mayuscula,una letra minuscula y un numero o un caracter especial.">
+				<input type="password" id="contrasena" name="contraseña">
 				</li>
 				<li id="mostrar-contraseña"><input id="checkbox" type="checkbox" onclick="mostrarContrasena()" name="mostrar-contraseña">
+
 				<label id="label-mostrar-contraseña" for="mostrar-contraseña">Mostrar contraseña</label>
 				</li>
 				<li><button class="button" type="submit">Iniciar sesion </button> </li>
@@ -97,8 +106,9 @@
 		<h2>Error al iniciar sesion:</h2>
 		<span>- Nombre de usuario o contraseña incorrecta </span>
 	</div>
+
 	<?php 
-		session_start();
+		
 		//Si tengo un parametro de error de inicio en SESSION significa que ya quisieron ingresar y fallo. Muestro el mensaje de error
 		if(isset($_SESSION['error-inicio']))
 		{
@@ -113,17 +123,3 @@
 	
 </body>
 </html>
-
-<?php
-	// la variable controller guarda el nombre del controlador y action guarda la acción por ejemplo registrar 
-	//si la variable controller y action son pasadas por la url desde layout.php entran en el if
-	// if (isset($_GET['controller'])&&isset($_GET['action'])) {
-	// 	$controller=$_GET['controller'];
-	// 	$action=$_GET['action'];
-	// } else {
-	// 	$controller='usuario';
-	// 	$action='index';
-	// }	
-	// //carga la vista layout.php
-	// require_once('Views/routes.php');
-?>

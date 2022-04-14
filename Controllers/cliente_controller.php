@@ -11,14 +11,14 @@ class ClienteController
 
 	public function index()
 	{
-		//session_start();
+		//Carga la vista 
 		require_once("../Views/Cliente/index.php");
-		//header("Location: ../Views/Cliente/index.php");
 	}
 	public function cambioClave()
-	{
+	{	//Carga la vista de cambio de clave
 		require_once('../Views/Cliente/cambioClave.php');
 	}
+	
 	public function cambiarContraseña($usuario,$contraseñaActual)
 	{
 		require_once('../Models/Usuario.php');
@@ -26,14 +26,15 @@ class ClienteController
 		//Si la contraseña actual ingresada es igual a la del usuario activo realizo la actualizacion de contraseña
 		if($contraseñaActual === $_SESSION['usuario']['clave'])
 		{
-			$_SESSION['usuario']['cambio_clave']= 0;
+			$_SESSION['usuario']['cambio_clave']= 0;		//Se cambia el valor de cambio de clave una vez se actualizo
 			$usuario->cambio_clave= 0;
 			$usuario->id= $_SESSION['usuario']['id'];
-			Usuario::cambiarContraseña($usuario);
-			$this->index();
+			Usuario::cambiarContraseña($usuario); 	//Se llama al modelo de cambiar contraseña
+			$this->index(); //Vuelve al index del usuario
 		}else
 		{
 			//La contraseña actual no coincide
+
 			echo "Entra al false";
 		}
 	}

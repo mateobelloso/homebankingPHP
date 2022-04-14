@@ -53,9 +53,8 @@ class Usuario
 			return new Usuario($result->id,$result->nombre,$result->apellido,$result->nombre_usuario,$result->clave,$result->dni,$result->tipo,$result->cambio_clave);
 		}
 		return null;
-
 	}
-
+	// Funcion que actualiza la clave una vez se valido el formulario de cambio de contraseña
 	public static function cambiarContraseña($usuario)
 	{
 		//$db= Db::connect();
