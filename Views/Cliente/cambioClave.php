@@ -1,13 +1,67 @@
+<style>
+	form {
+		margin: 0;
+		width: 30vw;
+		padding: 1em;
+		margin-left: 1vw;
+		margin-top: 1vw;
+	}
+
+	button {
+		border-radius: 50px;
+		background-color: #2980B9;
+		color: white;
+		padding: 1em;
+		margin-left: 15vw;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	form li + li {
+		margin-top: 1em;
+	}
+
+	label {
+		display: inline-block;
+		width: 180px;
+		text-align: left;
+	}
+
+	.error-border {
+		background-color: #FDD;
+		border-color: #900;
+	}
+	.correcto-border {
+		background-color: #5CF06C;
+		border-color: #00A411;
+	}
+
+	.error-contraseñas {
+		color: black;
+		background-color: #FDD;
+		font-size: 12px;
+		padding: 0;
+		border: 3px solid red;
+		width: 90%;
+	}
+</style>
 <script>
 	function chequeo()
 	{
-		debugger
-		const contrasena= document.getElementById("contrasena-nueva").value;
-		const contrasena2= document.getElementById("contrasena-nueva2").value;
-		var error= false;
+		const regContraseña= /(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/;	//Variable que va a controlar que la contraseña cumpla con el formato pedido
+		const contrasena= document.getElementById("contrasena-nueva");	//Almacena el elemento html con el id contrasena-nueva
+		const contrasena2= document.getElementById("contrasena-nueva2");	//Almacena el elemento html con el id contrasena-nueva2
+		const contrasenaActual= document.getElementById("contrasena-actual");	//Almacena el elemento html con el id contrasena-actual
+		var error= false;	//Variable para controlar si hay error
 
-		if (document.getElementById("contrasena-actual").value.length === 0) 
+		//Si el campo de contraseña actual es vacio marco el error
+		if (contrasenaActual.value.length === 0)
 		{
+			contrasenaActual.className= "error-border";
 			//document.getElementById("error-contrasena-vacia").style.visibility= "visible";
 			error= true;
 		}else
@@ -15,16 +69,21 @@
 			//document.getElementById("error-contrasena-vacia").style.visibility= "hidden";
 		}
 
-		if (contrasena === contrasena2) 
+		//Si las dos contraseñas nuevas son iguales y cumplen con el formato pongo el input en colorsito verde y oculto el error
+		if ((contrasena.value === contrasena2.value) && (regContraseña.test(contrasena.value))) 
 		{
-			document.getElementById("error-contrasena-distintas").style.visibility= "hidden";
-		}else
+			document.getElementById("error-contrasena-distintas").style.display= "none";
+			contrasena.className= "correcto-border";
+			contrasena2.className= "correcto-border";
+		}else 	//Caso contrario pongo el input en color rojo y hago visible el error
 		{
-			document.getElementById("error-contrasena-distintas").style.visibility= "visible";
+			contrasena.className= "error-border";
+			contrasena2.className= "error-border";
+			document.getElementById("error-contrasena-distintas").style.display= "block";
 			error= true;
 		}
 
-		if (error) 
+		if (error)	//Si hubo error retorno falso para que el formulario no se envie caso contrario retorno true
 		{
 			return false;
 		}else
@@ -40,11 +99,13 @@
 	<h1>Cambie su contraseña</h1>
 	<form name="formulario" action="cliente_controller.php" method="post" onsubmit="return chequeo()">
 		<input type="hidden" name="action" value="cambio-password">
-		<label>Contraseña Actual:<input type="password" id="contrasena-actual" name="contrasena-actual"></label><br>
-		<label>Contraseña Nueva:<input type="password" id="contrasena-nueva" name="contrasena-nueva"></label><br>
-		<label>Repita la contraseña nueva:<input type="password" id="contrasena-nueva2" name="contrasena-nueva2"></label><br>
-		<button type="submit" class="submit">Cambiar contraseña </button>
-		<h3 id="error-contrasena-distintas" style="visibility: hidden;">Las contraseñas no son iguales</h3>
+		<ul>
+			<li><label for="contrasena-actual">Contraseña Actual:</label><input type="password" id="contrasena-actual" name="contrasena-actual"></li>
+			<li><label for="contrasena-nueva">Contraseña Nueva:</label><input type="password" id="contrasena-nueva" name="contrasena-nueva"></li>
+			<li><label for="contrasena-nueva2">Repita la contraseña nueva:</label><input type="password" id="contrasena-nueva2" name="contrasena-nueva2"></li>
+			<li id="error-contrasena-distintas" style="display: none;"><div class="error-contraseñas"><p>Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial</p></div></li>
+			<li><button type="submit" class="submit">Cambiar contraseña </button></li>
+		</ul>
 	</form>
 
 </body>

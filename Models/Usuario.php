@@ -59,6 +59,9 @@ class Usuario
 	public static function cambiarContraseña($usuario)
 	{
 		//$db= Db::connect();
-		mysqli_query($usuario->db,"UPDATE usuarios SET clave = '$usuario->clave' WHERE usuarios.id = '$usuario->id'");
+		if(!mysqli_query($usuario->db,"UPDATE usuarios SET clave = '$usuario->clave', cambio_clave = '$usuario->cambio_clave' WHERE usuarios.id = '$usuario->id'"))
+		{
+			echo "Error en base de datos al actualizar contraseña";
+		}
 	}
 }

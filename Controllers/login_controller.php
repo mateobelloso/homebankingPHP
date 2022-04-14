@@ -20,7 +20,7 @@ class LoginController
 		{
 			//Se inicia sesion y se almacenan las variables del usuario en $_SESSION['usuario']
 			//session_start();
-			$_SESSION['usuario']= array('id' => $usuario->id,'nombre' => $usuario->nombre, 'apellido' => $usuario->apellido, 'nombre_usuario' => $usuario->nombre_usuario, 'dni' => $usuario->dni, 'tipo' => $usuario->tipo, 'cambio_clave' => $usuario->cambio_clave);
+			$_SESSION['usuario']= array('id' => $usuario->id,'nombre' => $usuario->nombre, 'apellido' => $usuario->apellido, 'nombre_usuario' => $usuario->nombre_usuario,'clave' => $usuario->clave, 'dni' => $usuario->dni, 'tipo' => $usuario->tipo, 'cambio_clave' => $usuario->cambio_clave);
 			// $_SESSION['id'] = $usuario->id;
 			// $_SESSION['nombre'] = $usuario->nombre;
 			// $_SESSION['apellido'] = $usuario->apellido;
