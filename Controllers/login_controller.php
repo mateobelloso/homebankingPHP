@@ -68,8 +68,8 @@ if (isset($_GET['action']))
 {
 	if($_GET['action']=='cerrar')
 	{
-		unset($_SESSION['usuario']);
 		session_start();
+		unset($_SESSION['usuario']);
 		//session_destroy();
 		$controller= new LoginController();
 		$controller->index();
@@ -117,7 +117,6 @@ if (isset($_POST['action'])) {
 			$controller->autenticacion($usuario);
 		}
 }
-
 
 
 ?>
