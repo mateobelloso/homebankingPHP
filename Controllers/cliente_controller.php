@@ -34,8 +34,8 @@ class ClienteController
 		}else
 		{
 			//La contraseña actual no coincide
-
-			echo "Entra al false";
+			require_once('../Views/Cliente/cambioClave.php');
+			echo "<script> mensajeErrorContraseñaIncorrecta() </script>";
 		}
 	}
 
@@ -59,6 +59,8 @@ if (isset($_POST['action'])) {
 		}else
 		{
 			//Algun campo esta vacio o las dos contraseñas no son iguales
+			require_once('../Views/Cliente/cambioClave.php');
+			echo "<div class='error-contraseñas'><p>El campo de contraseña actual no puede estar vacio y las contraseñas deben ser iguales y cumplir el formato de contener por lo menos una letra mayuscula, una letra minuscula y un numero o caracter especial</p></div>";
 		}
 	}
 }

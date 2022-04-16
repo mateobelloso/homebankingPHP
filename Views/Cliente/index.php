@@ -4,7 +4,20 @@
 </head>
 <body>
 	<!--Mensaje de bienvenido PARA EL CLIENTE una vez se haya iniciado sesion correctamente -->
-	<?php require_once("../Views/header.php"); ?> <!--Se llama al header -->
+	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
+	<?php 
+	if(!isset($_SESSION['usuario']))
+	{
+		header("Location: {$_SERVER['DOCUMENT_ROOT']}/hb/index.php");
+	}else
+	{
+		if($_SESSION['usuario']['cambio_clave'])
+		{
+			//header("Location: ".$_SERVER['DOCUMENT_ROOT']."/hb/Views/Cliente/cambioClave.php");
+			header("Location: /hb/Views/Cliente/cambioClave.php");
+		}
+	}
+	?>
 	<h1>¡Bienvenido <?php echo $_SESSION['usuario']['nombre_usuario'] ?>!</h1>
 	<?php echo $_SESSION['usuario']['nombre'] ?>
 	<?php echo $_SESSION['usuario']['apellido'] ?>
