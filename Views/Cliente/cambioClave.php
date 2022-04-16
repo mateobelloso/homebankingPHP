@@ -43,7 +43,7 @@
 		border-color: #00A411;
 	}
 	/*Estilo ROJO para campo INCORRECTO, 
-	"Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial"*/
+	"Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial, mensaje"*/
 	.error-contraseñas {
 		color: black;
 		background-color: #FDD;
@@ -115,7 +115,9 @@
 			<li><label for="contrasena-actual">Contraseña Actual:</label><input type="password" id="contrasena-actual" name="contrasena-actual"></li>
 			<li><label for="contrasena-nueva">Contraseña Nueva:</label><input type="password" id="contrasena-nueva" name="contrasena-nueva"></li>
 			<li><label for="contrasena-nueva2">Repita la contraseña nueva:</label><input type="password" id="contrasena-nueva2" name="contrasena-nueva2"></li>
+			
 			<li id="error-contrasena-distintas" style="display: none;"><div class="error-contraseñas"><p>Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial</p></div></li>
+			
 			<li><button type="submit" class="submit">Cambiar contraseña </button></li>
 		</ul>
 	</form>

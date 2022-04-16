@@ -72,7 +72,8 @@ if (isset($_GET['action']))
 	{
 		//Sesion start para solucionar el error de guardar el valor anterior
 		session_start();
-		unset($_SESSION['usuario']);	//Se borra la informacion del usuario que inicio sesion (Cierra su sesion) 
+		unset($_SESSION['usuario']);	//Se borra la informacion del usuario que inicio sesion (Cierra su sesion)
+		 
 		$controller= new LoginController();
 		$controller->index();
 	}

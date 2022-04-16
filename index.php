@@ -77,9 +77,6 @@
 	<!--link rel="stylesheet" href="Views/styles.css"-->
 </head>
 <body>
-		
-
-
 
 	<?php require_once("Views/header.php"); ?>
 	<?php session_start();?>
