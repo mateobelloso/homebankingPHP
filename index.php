@@ -81,8 +81,8 @@
 
 
 
-	<?php require_once("Views/header.php"); ?>
-	<?php session_start();?>
+	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?>
+	<?php //session_start();?>
 	<form action="Controllers/login_controller.php" method="post">
 		<input type="hidden" name="action" value="sesion">
 		<fieldset>

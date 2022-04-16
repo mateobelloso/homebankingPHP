@@ -96,7 +96,12 @@
 		{
 			return true;
 		}
-	}	
+	}
+
+	function mensajeErrorContraseñaIncorrecta()
+	{
+		document.getElementById("error-contraseña-incorrecta").style.display= "block";
+	}
 </script>
 
 <html>
@@ -105,7 +110,7 @@
 <body>
 
 	<!--Formulario en HTML para el cambio de contraseña  -->
-	<?php require_once('../Views/header.php'); ?> <!--Se llama al header -->
+	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
 	<h1>Cambie su contraseña</h1>
 
 	<form name="formulario" action="cliente_controller.php" method="post" onsubmit="return chequeo()"> 
@@ -116,6 +121,7 @@
 			<li><label for="contrasena-nueva">Contraseña Nueva:</label><input type="password" id="contrasena-nueva" name="contrasena-nueva"></li>
 			<li><label for="contrasena-nueva2">Repita la contraseña nueva:</label><input type="password" id="contrasena-nueva2" name="contrasena-nueva2"></li>
 			<li id="error-contrasena-distintas" style="display: none;"><div class="error-contraseñas"><p>Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial</p></div></li>
+			<li id="error-contraseña-incorrecta" style="display: none;"><div class="error-contraseñas"><h3>La contraseña actual es incorrecta</h3></div></li>
 			<li><button type="submit" class="submit">Cambiar contraseña </button></li>
 		</ul>
 	</form>
