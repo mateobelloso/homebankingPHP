@@ -9,6 +9,17 @@
 		text-align: left;
 		width: 50vw;
 	}
+
+	/*Estetica mensaje de error al iniciar sesion con valores incorrectos  */
+	.error {
+		color: black;
+		background-color: #F86157;
+		padding: 0;
+		margin-left: 25vw;
+		text-align: left;
+		width: 50vw;
+	}
+
 	/*Recuadro azul y el formulario de login */
 	form {
 		margin: 0;
@@ -68,7 +79,20 @@
   // Mensaje de error de inicio de sesion
   function mensajeError(){
   	var error= document.getElementById("error");
-  	error.style.visibility= "visible";
+  	error.style.display= "block";
+  }
+
+  function chequeo()
+  {
+  	const usuario= document.getElementById("usuario");
+  	const contraseña= document.getElementById("contrasena");
+
+  	if ((usuario.value.length == 0) || (contraseña.value.length == 0)) 
+  	{
+  		document.getElementById("error-campos-vacios").style.display= "block";
+  		return false;
+  	}
+  	return true;
   }
 </script>
 
@@ -80,13 +104,13 @@
 
 	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?>
 	<?php //session_start();?>
-	<form action="Controllers/login_controller.php" method="post">
+	<form action="/hb/Controllers/login_controller.php" method="post" onsubmit="return chequeo()">
 		<input type="hidden" name="action" value="sesion">
 		<fieldset>
 			<legend><h2>Iniciar sesión</h2></legend>
 			<ul>
 				<li><label for="usuario">Usuario</label>
-				<input type="text" name="usuario">
+				<input id="usuario" type="text" name="usuario">
 				</li>
 				<li><label for="contraseña">Contraseña</label>
 				<input type="password" id="contrasena" name="contraseña">
@@ -99,10 +123,11 @@
 			</ul>
 		</fieldset>
 	</form>
-	<div id="error" style="visibility: hidden;">
+	<div id="error" style="display: none;">
 		<h2>Error al iniciar sesion:</h2>
 		<span>- Nombre de usuario o contraseña incorrecta </span>
 	</div>
+	<div class='error' id="error-campos-vacios" style="display: none;"><p>Los campos no pueden ser vacios</p></div>
 
 	<?php 
 		

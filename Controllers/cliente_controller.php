@@ -49,7 +49,8 @@ if (isset($_POST['action'])) {
 	if ($_POST['action']=='cambio-password')
 	{
 		//Pregunto si el campo de contraseña actual y contraseña nueva no estan vacios y ademas si las dos contraseñas nuevas coinciden
-		if((isset($_POST['contrasena-actual'])) && (isset($_POST['contrasena-nueva'])) && ($_POST['contrasena-nueva'] === $_POST['contrasena-nueva2']))
+		$formatoContraseña= "/(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/";
+		if((isset($_POST['contrasena-actual'])) && (isset($_POST['contrasena-nueva'])) && ($_POST['contrasena-nueva'] === $_POST['contrasena-nueva2']) && (preg_match($formatoContraseña, $_POST['contrasena-nueva'])))
 		{
 			require_once("../Models/Usuario.php");
 			//Creo un usuario con la nueva clave que se quiere guardar

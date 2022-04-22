@@ -15,6 +15,10 @@ class AdministradorController
 	}
 	public function agregarCliente($usuario)
 	{
+
+		//vERIFICAR QUE EL USUARIO NO EXISTE EN LA BASE DE DATOS
+
+		
 		Usuario::agregarCliente($usuario); 		//Se llama al modelo de cambiar contraseña
 		$this->index(); //Vuelve al index del usuario
 	}

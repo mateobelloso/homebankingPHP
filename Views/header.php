@@ -1,3 +1,10 @@
+<?php 
+  	if(session_status() != PHP_SESSION_ACTIVE)
+  	{
+  		session_start();
+  	}
+
+?>
 <style >
 	#main-header {
 		background: #13026F;
@@ -68,12 +75,6 @@
     <!--link rel="stylesheet" href="styles.css" /-->
   </head>
   <body>
-  	<?php 
-  	if(session_status() != 2)
-  	{
-  		session_start();
-  	}
-  	?>
       <header id="main-header">
 		
 		<a id="logo-header" href="/hb/Controllers/login_controller.php">

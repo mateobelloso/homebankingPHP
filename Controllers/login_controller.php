@@ -10,6 +10,7 @@ class LoginController
 	public function index()
 	{
 		header("Location: ../index.php");
+		exit;
 	}
 
 	public function autenticacion($user)
@@ -56,6 +57,7 @@ class LoginController
 			//Se imprime el mensaje de error de inicio de sesion con 
 			$_SESSION['error-inicio']= "<script> mensajeError(); </script>";
 			header("Location: ../index.php");
+			exit;
 			
 			//Otra forma de imprimir el error
 
@@ -80,7 +82,7 @@ if (isset($_GET['action']))
 }
 
 //Si hay una sesion
-if(session_status())
+if(session_status()!= PHP_SESSION_ACTIVE)
 {
 	session_start();
 	//Inicializa la sesion y pregunta si hay un usuario cargado (osea la sesion ya esta iniciada)
@@ -116,6 +118,7 @@ if(session_status())
 		if(!isset($_POST['action']))
 		{
 			header("Location: ../index.php");
+			exit;
 		}
 	}
 }
@@ -126,8 +129,16 @@ if (isset($_POST['action'])) {
 		require_once('../Models/Usuario.php');
 		if($_POST['action']=='sesion')
 		{
-			$usuario= new Usuario(null,null,null,$_POST['usuario'],$_POST['contraseña'],null,null,null);
-			$controller->autenticacion($usuario);
+			if((strlen($_POST['usuario'])!= 0) && (strlen($_POST['contraseña'])))
+			{
+				$usuario= new Usuario(null,null,null,$_POST['usuario'],$_POST['contraseña'],null,null,null);
+				$controller->autenticacion($usuario);
+			}else
+			{
+				$_SESSION['error-inicio']= "<div class='error'><p>Los campos no pueden estar vacios</p></div>";
+				header('Location: ../index.php');
+				exit;
+			}
 		}
 }
 

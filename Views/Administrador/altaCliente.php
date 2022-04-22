@@ -65,7 +65,7 @@ function chequeoAltaCliente()
 	{debugger
 		const regContraseña= /(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/;	//Variable que va a controlar que la contraseña cumpla con el formato pedido
 		const regDNI= /^\d{7,8}$/; //Variable de validacion para el DNI
-		const regNombre_usuario= /.{6,}/; //Variable de validacion para el nombre de usuario
+		const regNombre_usuario= /[a-z0-9]{6,}/i; //Variable de validacion para el nombre de usuario
 
 		const nombre_cliente= document.getElementById("nombre_cliente");	//Almacena el elemento html con el id nombre_cliente
 		const nombre_usuario= document.getElementById("nombre_usuario");	//Almacena el elemento html con el id nombre_usuario
