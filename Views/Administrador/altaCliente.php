@@ -1,3 +1,4 @@
+	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
 <style>
 	
 	/*Estitica del formulario*/
@@ -148,18 +149,14 @@ function chequeoAltaCliente()
 
 </script>
 
-
-
 <html>
-<head>
-</head>
 <body>
 
 	<!--Formulario en HTML para el cambio de contraseña  -->
-	<?php require_once('../Views/header.php'); ?> <!--Se llama al header -->
+
 	<h1>Agregar cliente</h1>
 
-	<form name="formulario" action="administrador_controller.php" method="post" onsubmit="return chequeoAltaCliente()"> 
+	<form name="formulario" action="/hb/Controllers/administrador_controller.php" method="post" onsubmit="return chequeoAltaCliente()"> 
 		<!--Return Chequeo: Llama a la funcion chequeo que verifica las validaciones necesarias para enviar el forumalario al cliente controller -->
 		<input type="hidden" name="action" value="alta_cliente">
 		<ul>
@@ -182,8 +179,24 @@ function chequeoAltaCliente()
 
 			<li id="error-generico" style="display: none;"><div class="error-mensajeError"><p>Corregir los campos erroneos antes de reenviar el formulario</p></div></li>
 
+				<!-- Imprimir mensaje de error de la verificacion del alta cliente por PHP-->
+			<?php if(isset($_SESSION['error-alta-cliente'])) { 
+			?>
+			
+					<li> 
+					<div class="error-mensajeError">
+					<?php 
+				 		echo $_SESSION['error-alta-cliente'];
+				 		unset($_SESSION['error-alta-cliente']); 
+				 	?> 
+				 	</div>
+					</li>
+
+					<?php }?>
+
 			<li><button type="submit" class="submit">Agregar cliente</button></li>
 		</ul>
 	</form>
 </body>
 </html>
+

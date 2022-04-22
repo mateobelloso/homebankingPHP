@@ -73,4 +73,19 @@ class Usuario
 		}
 
 	}
+	public static function existeUsuario($usuario)
+	{
+		$sqlExiste= mysqli_query( $usuario->db, "SELECT * FROM usuarios
+												WHERE 
+												nombre_usuario= '$usuario->nombre_usuario' ");
+		//Preguntar
+		$sqlExiste= mysqli_fetch_object($sqlExiste);
+		if($sqlExiste != null)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
+	}
 }
