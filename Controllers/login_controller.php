@@ -135,7 +135,7 @@ if (isset($_POST['action'])) {
 				$controller->autenticacion($usuario);
 			}else
 			{
-				$_SESSION['error-inicio']= "<div class='error'><p>Los campos no pueden estar vacios</p></div>";
+				$_SESSION['error-inicio']= "<p>Los campos no pueden estar vacios</p>";
 				header('Location: ../index.php');
 				exit;
 			}

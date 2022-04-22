@@ -113,7 +113,7 @@
 	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
 	<h1>Cambie su contraseña</h1>
 
-	<form name="formulario" action="cliente_controller.php" method="post" onsubmit="return chequeo()"> 
+	<form name="formulario" action="/hb/Controllers/cliente_controller.php" method="post" > 
 		<!--Return Chequeo: Llama a la funcion chequeo que verifica las validaciones necesarias para enviar el forumalario al cliente controller -->
 		<input type="hidden" name="action" value="cambio-password">
 		<ul>
@@ -124,6 +124,13 @@
 			<li id="error-contrasena-distintas" style="display: none;"><div class="error-contraseñas"><p>Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial</p></div></li>
 
 			<li id="error-contraseña-incorrecta" style="display: none;"><div class="error-contraseñas"><h3>La contraseña actual es incorrecta</h3></div></li>
+
+			<?php if(isset($_SESSION['error-cambio-clave'])){ ?>
+				<li><div class="error-contraseñas">
+				<?php echo $_SESSION['error-cambio-clave'];
+							unset($_SESSION['error-cambio-clave']); ?>
+				</div></li>		
+			<?php } ?>
 
 			<li><button type="submit" class="submit">Cambiar contraseña </button></li>
 		</ul>

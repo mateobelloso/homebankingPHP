@@ -50,7 +50,7 @@ if (isset($_POST['action'])) {
 	{
 		//Pregunto si el campo de contraseña actual y contraseña nueva no estan vacios y ademas si las dos contraseñas nuevas coinciden
 		$formatoContraseña= "/(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/";
-		if((isset($_POST['contrasena-actual'])) && (isset($_POST['contrasena-nueva'])) && ($_POST['contrasena-nueva'] === $_POST['contrasena-nueva2']) && (preg_match($formatoContraseña, $_POST['contrasena-nueva'])))
+		if(($_POST['contrasena-actual']!="") && ($_POST['contrasena-nueva']!="") && ($_POST['contrasena-nueva'] === $_POST['contrasena-nueva2']) && (preg_match($formatoContraseña, $_POST['contrasena-nueva'])))
 		{
 			require_once("../Models/Usuario.php");
 			//Creo un usuario con la nueva clave que se quiere guardar
@@ -60,8 +60,10 @@ if (isset($_POST['action'])) {
 		}else
 		{
 			//Algun campo esta vacio o las dos contraseñas no son iguales
-			require_once('../Views/Cliente/cambioClave.php');
-			echo "<div class='error-contraseñas'><p>El campo de contraseña actual no puede estar vacio y las contraseñas deben ser iguales y cumplir el formato de contener por lo menos una letra mayuscula, una letra minuscula y un numero o caracter especial</p></div>";
+			session_start();
+			$_SESSION['error-cambio-clave']= "<p>El campo de contraseña actual no puede estar vacio y las contraseñas deben ser iguales y cumplir el formato de contener por lo menos una letra mayuscula, una letra minuscula y un numero o caracter especial</p>";
+			header('Location: ../Views/Cliente/cambioClave.php');
+			exit;
 		}
 	}
 }

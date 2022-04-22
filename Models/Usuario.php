@@ -65,7 +65,7 @@ class Usuario
 	}
 	public static function agregarCliente($usuario)
 	{
-		//
+		
 		$sqlAgregar = mysqli_query( $usuario->db,"INSERT INTO usuarios (nombre, apellido, nombre_usuario, clave, dni, tipo, cambio_clave) VALUES ('$usuario->nombre','$usuario->apellido','$usuario->nombre_usuario','$usuario->clave','$usuario->dni','$usuario->tipo','$usuario->cambio_clave')");
 		if(!$sqlAgregar)
 		{
