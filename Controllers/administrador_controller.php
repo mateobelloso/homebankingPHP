@@ -34,19 +34,27 @@ class AdministradorController
 		$clientes= Usuario::listarClientes();
 		require_once('../Views/Administrador/verClientes.php');
 	}
+	public function altaCuenta($id)
+	{
+		require_once('../Views/Administrador/altaCuenta.php');
+	}
 }	
 
 if (isset($_GET['action']))
 {
+	$controller= new AdministradorController();
 	if($_GET['action']=='alta')
 	{
-		$controller= new AdministradorController();
 		$controller->altaCliente();
 	}else
 	{
 		if ($_GET['action']=='verClientes') {
-			$controller= new AdministradorController();
 			$controller->verClientes();
+		}else
+		{
+			if ($_GET['action']=='agregarCuenta') {
+				$controller->altaCuenta($_GET['id']);
+			}
 		}
 	}
 }

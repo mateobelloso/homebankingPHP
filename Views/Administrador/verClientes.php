@@ -20,7 +20,7 @@
 	      		<td><?php echo $cliente->dni ?></td>
 	      		<td>
 	      			<a href="">Ver cuentas</a>
-	      			<a href="">Agregar cuenta</a>
+	      			<?php echo '<a href="administrador_controller.php?action=agregarCuenta&id='.$cliente->id.'">Agregar cuenta</a>'?>
 	      		</td>
 	    	</tr>
 	    <?php } ?>
