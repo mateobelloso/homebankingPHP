@@ -31,7 +31,7 @@ class AdministradorController
 	public function verClientes()
 	{
 		require_once('../Models/Usuario.php');
-		$clientes= Usuario::all();
+		$clientes= Usuario::listarClientes();
 		require_once('../Views/Administrador/verClientes.php');
 	}
 }	
