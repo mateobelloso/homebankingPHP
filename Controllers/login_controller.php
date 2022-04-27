@@ -129,13 +129,13 @@ if (isset($_POST['action'])) {
 		require_once('../Models/Usuario.php');
 		if($_POST['action']=='sesion')
 		{
-			if((strlen($_POST['usuario'])!= 0) && (strlen($_POST['contraseña'])))
+			if((strlen($_POST['usuario'])!= 0) && (strlen($_POST['contraseña']!=0)))
 			{
 				$usuario= new Usuario(null,null,null,$_POST['usuario'],$_POST['contraseña'],null,null,null);
 				$controller->autenticacion($usuario);
 			}else
 			{
-				$_SESSION['error-inicio']= "<p>Los campos no pueden estar vacios</p>";
+				$_SESSION['error-inicio']= "<div class='error'><p>Los campos no pueden estar vacios</p></div>";
 				header('Location: ../index.php');
 				exit;
 			}

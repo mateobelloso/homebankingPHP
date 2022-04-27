@@ -32,7 +32,7 @@ class Usuario
 	public static function all()
 	{
 		$listaUsuarios= [];
-		//$db= Db::connect();
+		$db= Db::connect();
 		$result= mysqli_query($db,"SELECT * FROM usuarios") or die('Query invalido: '.mysqli_error().'\n');
 		//mysqli_free_result($result);
 		while ($row=mysqli_fetch_array($result)) {

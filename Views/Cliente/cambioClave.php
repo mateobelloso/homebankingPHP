@@ -113,7 +113,7 @@
 	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
 	<h1>Cambie su contraseña</h1>
 
-	<form name="formulario" action="/hb/Controllers/cliente_controller.php" method="post" > 
+	<form name="formulario" action="/hb/Controllers/cliente_controller.php" method="post" onsubmit="return chequeo()"> 
 		<!--Return Chequeo: Llama a la funcion chequeo que verifica las validaciones necesarias para enviar el forumalario al cliente controller -->
 		<input type="hidden" name="action" value="cambio-password">
 		<ul>

@@ -104,7 +104,7 @@
 
 	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?>
 	<?php //session_start();?>
-	<form action="/hb/Controllers/login_controller.php" method="post" onsubmit="return chequeo()">
+	<form action="/hb/Controllers/login_controller.php" method="post"  >
 		<input type="hidden" name="action" value="sesion">
 		<fieldset>
 			<legend><h2>Iniciar sesión</h2></legend>

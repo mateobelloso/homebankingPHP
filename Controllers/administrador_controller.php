@@ -28,6 +28,12 @@ class AdministradorController
 			exit;
 		}
 	}
+	public function verClientes()
+	{
+		require_once('../Models/Usuario.php');
+		$clientes= Usuario::all();
+		require_once('../Views/Administrador/verClientes.php');
+	}
 }	
 
 if (isset($_GET['action']))
@@ -36,6 +42,12 @@ if (isset($_GET['action']))
 	{
 		$controller= new AdministradorController();
 		$controller->altaCliente();
+	}else
+	{
+		if ($_GET['action']=='verClientes') {
+			$controller= new AdministradorController();
+			$controller->verClientes();
+		}
 	}
 }
 if (isset($_POST['action'])) 
