@@ -64,31 +64,31 @@ if (isset($_POST['action']))
 		//Chequeo campos vacios
 		if ($_POST['nombre_usuario']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campo vacio</p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;	
 		}
 		if($_POST['apellido_cliente']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campo vacio</p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;	
 		}
 		if($_POST['nombre_usuario']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campo vacio</p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}
 		if($_POST['dni_cliente']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campo vacio</p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}
 		if(($_POST['clave_cliente']==''))
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campo vacio</p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}

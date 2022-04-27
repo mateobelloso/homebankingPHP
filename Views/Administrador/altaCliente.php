@@ -38,6 +38,10 @@
 		background-color: #F86157;
 		border-color: #900;
 	}
+	.blank-border {
+		background-color: #FFFFFF;
+		border-color: #900;
+	}
 	/*Estilo VERDE para campo CORRECTO, si ingresan algun valor*/
 	.correcto-border {
 		background-color: #5CF06C;
@@ -81,26 +85,36 @@ function chequeoAltaCliente()
 		{
 			nombre_cliente.className= "error-border";
 			error=true;
+		}else{
+			nombre_cliente.className="blank-border"
 		}
 		if(apellido_cliente.value.length==0)
 		{
 			apellido_cliente.className= "error-border";
 			error=true;
+		}else{
+			apellido_cliente.className="blank-border"
 		}
 		if(nombre_usuario.value.length==0)
 		{
 			nombre_usuario.className= "error-border";
 			error=true;
+		}else{
+			nombre_usuario.className="blank-border"
 		}
 		if(dni_cliente.value.length==0)
 		{
 			dni_cliente.className= "error-border";
 			error=true;
+		}else{
+			dni_cliente.className="blank-border"
 		}
 		if(clave_cliente.value.length==0)
 		{
 			clave_cliente.className= "error-border";
 			error=true;
+		}else{
+			clave_cliente.className="blank-border"
 		}
 	
 	
