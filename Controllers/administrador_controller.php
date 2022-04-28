@@ -15,17 +15,29 @@ class AdministradorController
 	}
 	public function agregarCliente($usuario)
 	{
+		define('NO_EXISTE_USUARIO', '1');
+		define('EXISTE_NOMBRE_USUARIO', '2');
+		define('EXISTE_DNI','3');
+		$existe= Usuario::existeUsuario($usuario);
 
-		//vERIFICAR QUE EL USUARIO NO EXISTE EN LA BASE DE DATOS
-		if(!Usuario::existeUsuario($usuario))
+		//vERIFICAR QUE EL USUARIO o EL DNI NO EXISTE EN LA BASE DE DATOS
+		if($existe==1)
 		{
 			Usuario::agregarCliente($usuario); 		//Se llama al modelo de cambiar contraseña
 			$this->index(); //Vuelve al index del usuario
 		}else
 		{
-			$_SESSION['error-alta-cliente']="<p>Error el nombre de usuario ya existe</p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");
-			exit;
+			if($existe==2)
+			{
+				$_SESSION['error-alta-cliente']="<p>Error el nombre de usuario ya existe</p>";
+				header("Location: /hb/Views/Administrador/altaCliente.php");
+				exit;
+			}else
+			{
+				$_SESSION['error-alta-cliente']="<p>Error el DNI ya existe</p>";
+				header("Location: /hb/Views/Administrador/altaCliente.php");
+				exit;
+			}
 		}
 	}
 	public function verClientes()
@@ -65,10 +77,11 @@ if (isset($_POST['action']))
 	if ($_POST['action']=='alta_cliente')
 	{	
 		session_start();
+
 		$formatoNombre_Usuario="/[a-z0-9]{6,}/i";  //Formato Nombre de usuario
 		$formatoDni_Cliente="/^\d{7,8}$/";//Formato DNI
 		$formatoClave_Cliente="/(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/";//Formato contraseña
-
+		$formatoNombreApe="/^[a-z]+(\s[a-z]+)*$/i";
 		//Chequeo campos vacios
 		if ($_POST['nombre_usuario']=='')
 		{
@@ -103,7 +116,19 @@ if (isset($_POST['action']))
 		//Verifica que el nombre de usuario sea correcto
 		if(!preg_match($formatoNombre_Usuario, $_POST['nombre_usuario']))
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre usuario, DNI o contraseña </p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
+			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
+			exit;
+		}
+		if(!preg_match($formatoNombreApe, $_POST['nombre_cliente']))
+		{
+			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
+			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
+			exit;
+		}
+		if(!preg_match($formatoNombreApe, $_POST['apellido_cliente']))
+		{
+			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}
@@ -111,7 +136,7 @@ if (isset($_POST['action']))
 		//Verifica que el DNI cumpla con las condiciones
 		if(!preg_match($formatoDni_Cliente, $_POST['dni_cliente']))
 		{	
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre usuario, DNI o contraseña </p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}
@@ -119,7 +144,7 @@ if (isset($_POST['action']))
 		//Verifica que la contraseña este en el formato adecuado
 		if(!preg_match($formatoClave_Cliente, $_POST['clave_cliente']))
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre usuario, DNI o contraseña </p>";
+			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}

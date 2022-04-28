@@ -75,17 +75,32 @@ class Usuario
 	}
 	public static function existeUsuario($usuario)
 	{
-		$sqlExiste= mysqli_query( $usuario->db, "SELECT * FROM usuarios
+		//VERIIFICA EN LA BASE DE DATOS QUE NO EXISTA UN USUARIO CON EL MISMO NOMBRE DE USUARIO O DNI
+		$sqlnombreusuarioExiste= mysqli_query( $usuario->db, "SELECT * FROM usuarios
 												WHERE 
 												nombre_usuario= '$usuario->nombre_usuario' ");
+		
+
 		//Preguntar
-		$sqlExiste= mysqli_fetch_object($sqlExiste);
-		if($sqlExiste != null)
+		$sqlnombreusuarioExiste= mysqli_fetch_object($sqlnombreusuarioExiste);
+
+
+		if($sqlnombreusuarioExiste != null)
 		{
-			return true;
+			return 2;	//EL USUARIO YA EXISTE
+		}
+
+		$sqldniExiste= mysqli_query( $usuario->db, "SELECT * FROM usuarios
+												WHERE 
+												dni= '$usuario->dni' ");
+		$sqldniExiste= mysqli_fetch_object($sqldniExiste);
+		if ($sqldniExiste!=null) {
+			return 3;	//EL DNI YA EXISTE
 		}else
 		{
-			return false;
+			return 1;	//NO EXISTE EL DNI NI EL USUARIO
 		}
+
+
 	}
 }

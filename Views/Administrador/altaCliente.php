@@ -67,10 +67,12 @@
 
 <script>
 function chequeoAltaCliente()
-	{debugger
+	{	debugger
 		const regContraseña= /(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/;	//Variable que va a controlar que la contraseña cumpla con el formato pedido
 		const regDNI= /^\d{7,8}$/; //Variable de validacion para el DNI
 		const regNombre_usuario= /[a-z0-9]{6,}/i; //Variable de validacion para el nombre de usuario
+		const regNombreApe_cliente=/^[a-z]+(\s[a-z]+)*$/i;
+		
 
 		const nombre_cliente= document.getElementById("nombre_cliente");	//Almacena el elemento html con el id nombre_cliente
 		const nombre_usuario= document.getElementById("nombre_usuario");	//Almacena el elemento html con el id nombre_usuario
@@ -118,6 +120,22 @@ function chequeoAltaCliente()
 		}
 	
 	
+		if (regNombreApe_cliente.test(nombre_cliente.value)){
+			document.getElementById("error-nombre-invalido").style.display= "none";
+		}else{
+			nombre_cliente.className= "error-border";
+			document.getElementById("error-nombre-invalido").style.display= "block";
+			error=true;
+		}
+		if (regNombreApe_cliente.test(apellido_cliente.value)){
+			document.getElementById("error-apellido-invalido").style.display= "none";
+		}else{
+			apellido_cliente.className= "error-border";
+			document.getElementById("error-apellido-invalido").style.display= "block";
+			error=true;
+		}
+
+
 		//Verifica que el nombre de usuario sea correcto
 		if(regNombre_usuario.test(nombre_usuario.value))
 		{
@@ -182,8 +200,12 @@ function chequeoAltaCliente()
 
 			<li><label for="dni" class="is-required">DNI</label><li><input type="text" id="dni_cliente" name="dni_cliente"></li></li>
 
-			<li><label for="clave" class="is-required">Clave<li></label><li><input type="password" id="clave_cliente" name="clave_cliente"></li></li>
+			<li><label for="clave" class="is-required">Clave<li></label><li><input type="text" id="clave_cliente" name="clave_cliente"></li></li>
 			
+			<li id="error-nombre-invalido" style="display: none;"><div class="error-mensajeError"><p>Error en el formato de nombre de cliente</p></div></li>
+
+			<li id="error-apellido-invalido" style="display: none;"><div class="error-mensajeError"><p>Error en el formato de apellido de cliente</p></div></li>
+
 			<!--Error de nombre de usuario invalido -->
 			<li id="error-nombre-usuario-invalido" style="display: none;"><div class="error-mensajeError"><p>Error en el formato de nombre de usuario</p></div></li>
 

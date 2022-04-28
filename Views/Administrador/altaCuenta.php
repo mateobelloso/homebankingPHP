@@ -1,5 +1,6 @@
 
 <?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
+
 <h1>Vas a agregar una cuenta al id: <?php echo $id ?></h1>
 	<h1>Agregar una cuenta:</h1>
 
