@@ -5,6 +5,10 @@ require_once('../connection.php');
 class Usuario
 {
 
+	const NO_EXISTE_USUARIO= 1;
+	const EXISTE_NOMBRE_USUARIO= 2;
+	const EXISTE_DNI= 3;
+
 	public $id;
 	public $nombre;
 	public $apellido;
@@ -87,7 +91,7 @@ class Usuario
 
 		if($sqlnombreusuarioExiste != null)
 		{
-			return 2;	//EL USUARIO YA EXISTE
+			return Usuario::EXISTE_NOMBRE_USUARIO;	//EL USUARIO YA EXISTE
 		}
 
 		$sqldniExiste= mysqli_query( $usuario->db, "SELECT * FROM usuarios
@@ -95,10 +99,10 @@ class Usuario
 												dni= '$usuario->dni' ");
 		$sqldniExiste= mysqli_fetch_object($sqldniExiste);
 		if ($sqldniExiste!=null) {
-			return 3;	//EL DNI YA EXISTE
+			return Usuario::EXISTE_DNI;	//EL DNI YA EXISTE
 		}else
 		{
-			return 1;	//NO EXISTE EL DNI NI EL USUARIO
+			return Usuario::NO_EXISTE_USUARIO;	//NO EXISTE EL DNI NI EL USUARIO
 		}
 
 

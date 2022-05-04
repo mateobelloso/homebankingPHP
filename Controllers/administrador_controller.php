@@ -15,19 +15,16 @@ class AdministradorController
 	}
 	public function agregarCliente($usuario)
 	{
-		define('NO_EXISTE_USUARIO', '1');
-		define('EXISTE_NOMBRE_USUARIO', '2');
-		define('EXISTE_DNI','3');
 		$existe= Usuario::existeUsuario($usuario);
 
 		//vERIFICAR QUE EL USUARIO o EL DNI NO EXISTE EN LA BASE DE DATOS
-		if($existe==1)
+		if($existe==Usuario::NO_EXISTE_USUARIO)
 		{
 			Usuario::agregarCliente($usuario); 		//Se llama al modelo de cambiar contraseña
 			$this->index(); //Vuelve al index del usuario
 		}else
 		{
-			if($existe==2)
+			if($existe==Usuario::EXISTE_NOMBRE_USUARIO)
 			{
 				$_SESSION['error-alta-cliente']="<p>Error el nombre de usuario ya existe</p>";
 				header("Location: /hb/Views/Administrador/altaCliente.php");
@@ -49,6 +46,20 @@ class AdministradorController
 	public function altaCuenta($id)
 	{
 		require_once('../Views/Administrador/altaCuenta.php');
+	}
+	public function agregarCuenta($cuenta)
+	{
+		//Si el alias existe en la base de datos
+		if (Cuenta::existeCuentaAlias($cuenta)) 
+		{
+			$_SESSION['error-existe-alias']= "<p>El alias ya esta en uso </p>";	//Carga el error en SESSION
+			header("Location: /hb/Views/Administrador/altaCuenta.php");	//Recarga la pagina del formulario
+			exit;
+		}else
+		{
+			Cuenta::agregarCuenta($cuenta);	//Agrega la cuenta a la base de datos
+			$this->verClientes();	//Recarga la pagina a la tabla de los clientes	
+		}
 	}
 }	
 
@@ -78,6 +89,29 @@ if (isset($_POST['action']))
 	{	
 		session_start();
 
+		chequeoAltaCliente();	//Funcion que chequea el alta cliente
+		require_once ($_SERVER['DOCUMENT_ROOT']."/hb/Models/Usuario.php");
+		//Creo un usuario para agregarlo a la base de datos	
+		$usuario= new Usuario(null,$_POST['nombre_cliente'],$_POST['apellido_cliente'],$_POST['nombre_usuario'],$_POST['clave_cliente'], $_POST['dni_cliente'],"comun",1);
+		//Llamo al metodo cambiarContraseña de la clase del controller
+		$controller->agregarCliente($usuario);
+	}else
+	{
+		if ($_POST['action']=='alta_cuenta')
+		{
+			session_start();
+			chequeoAltaCuenta();	//Funcion que chequea el alta de una cuenta
+			require_once($_SERVER['DOCUMENT_ROOT']."/hb/Models/Cuenta.php");
+			$fecha= date('Y-m-d H:i:s');	//Formato datetime para la base de datos
+			$cuenta= new Cuenta(null,$_POST['id'],$_POST['nombre-cuenta'],$_POST['alias'],0,$fecha);
+			$controller->agregarCuenta($cuenta);	//Llama al metodo que se va a encargar de agregar la cuenta
+		}
+	}
+}
+
+
+	function chequeoAltaCliente()
+	{
 		$formatoNombre_Usuario="/[a-z0-9]{6,}/i";  //Formato Nombre de usuario
 		$formatoDni_Cliente="/^\d{7,8}$/";//Formato DNI
 		$formatoClave_Cliente="/(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/";//Formato contraseña
@@ -148,11 +182,31 @@ if (isset($_POST['action']))
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}
-		require_once ($_SERVER['DOCUMENT_ROOT']."/hb/Models/Usuario.php");
-		//Creo un usuario para agregarlo a la base de datos	
-		$usuario= new Usuario(null,$_POST['nombre_cliente'],$_POST['apellido_cliente'],$_POST['nombre_usuario'],$_POST['clave_cliente'], $_POST['dni_cliente'],"comun",1);
-		//Llamo al metodo cambiarContraseña de la clase del controller
-		$controller->agregarCliente($usuario);
 	}
-}
+
+	function chequeoAltaCuenta()
+	{
+		$regNombreCuenta= "/[^a-z]/i";	//Expresion regular del nombre de la cuenta
+		$regAlias= "/[^a-z]/i";	//Expresion regular del alias
+
+		$nombreCuenta= str_replace($regNombreCuenta,"",$_POST['nombre-cuenta']);
+		$alias= str_replace($regAlias,"",$_POST['alias']);
+
+		//Si el nombre de cuenta no cumple el formato
+		if(strlen($nombreCuenta)<5)
+		{
+			$_SESSION['error-nombre-cuenta']= "<p> El nombre de la cuenta no puede estar vacio y debe contener por lo menos 5 caracteres alfabeticos</p>";	//Carga un error en SESSION
+			header("Location: /hb/Views/Administrador/altaCuenta.php");	//Recarga la pagina del formulario
+			exit;
+		}
+
+		//Si el alias no cumple el formato
+		if (strlen($alias)<8) 
+		{
+			$_SESSION['error-alias']= "<p> El alias de la cuenta no puede estar vacio y debe contener por lo menos 8 caracteres alfabeticos</p>";	//Carga un error en SESSION
+			header("Location: /hb/Views/Administrador/altaCuenta.php");	//Recarga la pagina del formulario
+			exit;
+		}
+
+	}
 ?>
