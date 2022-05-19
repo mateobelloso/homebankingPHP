@@ -43,6 +43,25 @@ class Cuenta
 			return true;
 		}
 	}
+
+	//Fucion que retorna una lista de las cuentas del cliente pasado como parametro el id del cliente
+	public static function listarCuentasDeCliente($id)
+	{
+		$db= Db::connect();
+		$listaCuentas= [];
+		$result= mysqli_query($db,"SELECT * FROM cuentas WHERE id_usuario = '$id'");
+		while($row=mysqli_fetch_array($result))
+		{
+			$listaCuentas[]= new Cuenta($row['id'],$row['id_usuario'],$row['nombre'],$row['alias'],$row['saldo'],$row['fecha_hora']);
+		}
+		return $listaCuentas;
+	}
+
+	public static function actualizarSaldo($idCuenta,$monto)
+	{
+		$db= Db::connect();
+		$result= mysqli_query($db,"UPDATE cuentas SET saldo = saldo + '$monto' WHERE cuentas.id = '$idCuenta';");
+	}
 }
 
 ?>

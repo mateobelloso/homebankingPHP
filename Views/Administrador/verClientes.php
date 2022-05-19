@@ -19,7 +19,7 @@
 				<td><?php echo $cliente->apellido ?></td>
 	      		<td><?php echo $cliente->dni ?></td>
 	      		<td>
-	      			<a href="">Ver cuentas</a>
+	      			<?php echo '<a href="administrador_controller.php?action=verCuentas&id='.$cliente->id.'">Ver cuentas</a>'?>
 	      			<?php echo '<a href="administrador_controller.php?action=agregarCuenta&id='.$cliente->id.'">Agregar cuenta</a>'?>
 	      		</td>
 	    	</tr>

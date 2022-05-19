@@ -43,6 +43,22 @@ class AdministradorController
 		$clientes= Usuario::listarClientes();
 		require_once('../Views/Administrador/verClientes.php');
 	}
+	public function verCuentas($id)
+	{
+		require_once('../Models/Cuenta.php');
+		$cuentas= Cuenta::listarCuentasDeCliente($id);
+		require_once('../Views/Administrador/verCuentas.php');
+	}
+	public function depositarSueldo($idCuentaDestino)
+	{
+		require_once('../Views/Administrador/depositarSueldo.php');
+	}
+	public function realizarDeposito($transaccion)
+	{
+		require_once('../Models/Cuenta.php');
+		Transaccion::agregarDeposito($transaccion);
+		$this->verClientes();
+	}
 	public function altaCuenta($id)
 	{
 		require_once('../Views/Administrador/altaCuenta.php');
@@ -53,7 +69,7 @@ class AdministradorController
 		if (Cuenta::existeCuentaAlias($cuenta)) 
 		{
 			$_SESSION['error-existe-alias']= "<p>El alias ya esta en uso </p>";	//Carga el error en SESSION
-			header("Location: /hb/Views/Administrador/altaCuenta.php");	//Recarga la pagina del formulario
+			header("Location: /hb/controllers/administrador_controller.php?action=agregarCuenta&id=".$cuenta->id_usuario);	//Recarga la pagina del formulario
 			exit;
 		}else
 		{
@@ -77,6 +93,19 @@ if (isset($_GET['action']))
 		{
 			if ($_GET['action']=='agregarCuenta') {
 				$controller->altaCuenta($_GET['id']);
+			}
+			else
+			{
+				if ($_GET['action']=='verCuentas')
+				{
+					$controller->verCuentas($_GET['id']);
+				}
+				else
+				{
+					if ($_GET['action']=='depositarSueldo') {
+						$controller->depositarSueldo($_GET['id']);
+					}
+				}
 			}
 		}
 	}
@@ -105,6 +134,17 @@ if (isset($_POST['action']))
 			$fecha= date('Y-m-d H:i:s');	//Formato datetime para la base de datos
 			$cuenta= new Cuenta(null,$_POST['id'],$_POST['nombre-cuenta'],$_POST['alias'],0,$fecha);
 			$controller->agregarCuenta($cuenta);	//Llama al metodo que se va a encargar de agregar la cuenta
+		}else
+		{
+			if ($_POST['action']=='deposito_sueldo')
+			{
+				session_start();
+				chequeoDepositoSueldo(); //Funcion que chequea el deposito de sueldo
+				require_once($_SERVER['DOCUMENT_ROOT']."/hb/Models/Transaccion.php");
+
+				$transaccion=new Transaccion(null,null,$_POST['id_cuenta_destino'],'deposito',$_POST['monto'],date('Y-m-d H:i:s'));
+				$controller->realizarDeposito($transaccion);
+			}
 		}
 	}
 }
@@ -208,5 +248,15 @@ if (isset($_POST['action']))
 			exit;
 		}
 
+	}
+
+	function chequeoDepositoSueldo()
+	{
+		if ($_POST['monto'] <= 0) 
+		{
+			$_SESSION['error-monto']= "<p>El monto debe ser mayor que cero.</p>";
+			header("Location: /hb/Controllers/administrador_controller.php?action=depositarSueldo&id=".$_POST['id_cuenta_destino']);
+			exit;
+		}
 	}
 ?>
