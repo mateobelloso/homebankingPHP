@@ -1,0 +1,62 @@
+/*Estitica del formulario*/
+	form {
+		margin: 0;
+		width: 30vw;
+		padding: 1em;
+		margin-left: 1vw;
+		margin-top: 1vw;
+	}
+	/*Estitica del boton de cambiar contraseña*/
+	button {
+		border-radius: 50px;
+		background-color: #2980B9;
+		color: white;
+		padding: 1em;
+		margin-left: 15vw;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	form li + li {
+		margin-top: 1em;
+	}
+	/*Ordenacion del formulario */
+	label {
+		display: inline-block;
+		width: 180px;
+		text-align: left;
+	}
+	/*Estilo ROJO para el campo INCORRECTO, si ingresan algun valor*/
+	.error-border {
+		background-color: #F86157;
+		border-color: #900;
+	}
+	.blank-border {
+		background-color: #FFFFFF;
+		border-color: black;
+	}
+	/*Estilo VERDE para campo CORRECTO, si ingresan algun valor*/
+	.correcto-border {
+		background-color: #5CF06C;
+		border-color: #00A411;
+	}
+	/*Estilo ROJO para campo INCORRECTO, 
+	"Las contraseñas no son iguales o no cumplen con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial"*/
+	.error-mensajeError {
+		color: black;
+		background-color: #FDD;
+		font-size: 12px;
+		padding: 0;
+		border: 3px solid red;
+		width: 90%;
+	}
+	.is-required:after {
+ 	 content: '*';
+ 	 margin-left: 2px;
+	  color: red;
+ 	 font-weight: bold;
+	}

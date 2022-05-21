@@ -1,0 +1,62 @@
+/*Estetica mensaje de error al iniciar sesion con valores incorrectos  */
+#error {
+	color: black;
+	background-color: #F86157;
+	padding: 0;
+	margin-left: 25vw;
+	text-align: left;
+	width: 50vw;
+}
+
+/*Estetica mensaje de error al iniciar sesion con valores incorrectos  */
+.error {
+	color: black;
+	background-color: #F86157;
+	padding: 0;
+	margin-left: 25vw;
+	text-align: left;
+	width: 50vw;
+}
+
+/*Recuadro azul y el formulario de login */
+form {
+	margin: 0;
+	width: 30vw;
+	padding: 1em;
+	border: 5px solid blue;
+	border-radius: 1em;
+	margin-left: 35vw;
+	margin-top: 10vw;
+}
+/*Estetica boton de iniciar sesion */
+button {
+	border-radius: 50px;
+	background-color: #2980B9;
+	color: white;
+	padding: 1em;
+	margin-left: 15vw;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+form li + li {
+	margin-top: 1em;
+}
+
+label {
+	display: inline-block;
+	width: 80px;
+	text-align: left;
+}
+
+#mostrar-contraseña {
+	margin-left: 15vw;
+}
+
+#label-mostrar-contraseña {
+	width: 124px;
+}
