@@ -22,6 +22,17 @@
 
 		<li id="error-apellido-invalido" style="display: none;"><div class="error-mensajeError"><p>Error en el formato de apellido de cliente</p></div></li>
 
+		<!--Error de nombre de usuario invalido -->
+		<li id="error-nombre-usuario-invalido" style="display: none;"><div class="error-mensajeError"><p>Error en el formato de nombre de usuario</p></div></li>
+
+		<!--Error de DNI invalido -->
+		<li id="error-dni-invalido" style="display: none;"><div class="error-mensajeError"><p>El DNI Ingresado es invalido</p></div></li>
+
+		<!--Error en el formato de la contraseña -->
+		<li id="error-clave-erronea" style="display: none;"><div class="error-mensajeError"><p>La contraseña no cumple con el formato de contener por lo menos 1 letra mayuscula, 1 letra minuscula y 1 numero o caracter especial</p></div></li>
+		<!--Error generico de algun campo erroneo -->
+		<li id="error-generico" style="display: none;"><div class="error-mensajeError"><p>Corregir los campos erroneos antes de reenviar el formulario</p></div></li>
+
 				<!-- Imprimir mensaje de error de la verificacion del alta cliente por PHP-->
 			<?php if(isset($_SESSION['error-alta-cliente-nombre-vacio'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-nombre-vacio'];unset($_SESSION['error-alta-cliente-nombre-vacio']); ?> </div></li><?php }?>
 			<?php if(isset($_SESSION['error-alta-cliente-apellido-vacio'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-apellido-vacio'];unset($_SESSION['error-alta-cliente-apellido-vacio']); ?> </div></li><?php }?>

@@ -99,7 +99,7 @@ function chequeoAltaCliente()
 			error=true;
 			}
 
-			//En caso de error no se envio el formulario y se imprime un error generico
+		//En caso de error no se envio el formulario y se imprime un error generico
 		if(!error)
 		{
 			document.getElementById("error-generico").style.display= "none";
