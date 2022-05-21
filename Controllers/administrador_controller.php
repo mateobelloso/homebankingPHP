@@ -1,23 +1,30 @@
 <?php
-/**
- * 
- */
+/****************************************************
+ * Se definen las funcionalidades del administrador
+ ***************************************************/
 class AdministradorController
 {
 	public function index()
 	{	//Carga la vista de cambio de clave
 		require_once('../Views/Administrador/index.php');
 	}
+
+	/******************************
+	 * Carga la vista para el alta del cliente
+	 ******************************/
 	public function altaCliente()
-	{	//Carga la vista de cambio de clave
+	{	
 		session_start();
 		require_once('../Views/Administrador/altaCliente.php');
 	}
+
+	/******************************************************************
+	 * Funcion para agregar clientes verficando que el usuario no exista
+	********************************************************************/
 	public function agregarCliente($usuario)
 	{
 		$existe= Usuario::existeUsuario($usuario);
-
-		//vERIFICAR QUE EL USUARIO o EL DNI NO EXISTE EN LA BASE DE DATOS
+		//VERIFICAR QUE EL USUARIO o EL DNI NO EXISTE EN LA BASE DE DATOS
 		if($existe==Usuario::NO_EXISTE_USUARIO)
 		{
 			Usuario::agregarCliente($usuario); 		//Se llama al modelo de cambiar contraseña
@@ -37,32 +44,51 @@ class AdministradorController
 			}
 		}
 	}
+	/*************************************************************
+	*Funcion que carga la vista para visulizar la lista de clientes
+	****************************************************************/
 	public function verClientes()
 	{
 		require_once('../Models/Usuario.php');
 		$clientes= Usuario::listarClientes();
 		require_once('../Views/Administrador/verClientes.php');
 	}
+	/*************************************************************
+	*Funcion que carga la vista para visulizar las cuentas de los clientes
+	****************************************************************/
 	public function verCuentas($id)
 	{
 		require_once('../Models/Cuenta.php');
 		$cuentas= Cuenta::listarCuentasDeCliente($id);
 		require_once('../Views/Administrador/verCuentas.php');
 	}
+	/*************************************************************
+	*Funcion que carga la vista para visulizar el deposito de sueldo
+	****************************************************************/
 	public function depositarSueldo($idCuentaDestino)
 	{
 		require_once('../Views/Administrador/depositarSueldo.php');
 	}
+	/*************************************************************
+	*Funcion que realiza el deposito del sueldo
+	****************************************************************/
 	public function realizarDeposito($transaccion)
 	{
 		require_once('../Models/Cuenta.php');
 		Transaccion::agregarDeposito($transaccion);
 		$this->verCuentas(Cuenta::obtenerIdCliente($transaccion->id_cuenta_destino));
 	}
+	/**********************************
+	*Carga la vista del alta de cuenta
+	***********************************/
 	public function altaCuenta($id)
 	{
 		require_once('../Views/Administrador/altaCuenta.php');
 	}
+
+	/*******************************************************************************************
+	*Funcion para agregar una cuenta a un cliente, verificando que no exista otra cuenta con ese alias
+	*********************************************************************************************/
 	public function agregarCuenta($cuenta)
 	{
 		//Si el alias existe en la base de datos
@@ -79,30 +105,37 @@ class AdministradorController
 	}
 }	
 
+
+/*******************************************************************************************
+*Chequeo de si se accedio al archivo con un pedido de GET(Pedido por URL), en caso afirmativo verifica que accion se desea realizar
+*********************************************************************************************/
 if (isset($_GET['action']))
 {
 	$controller= new AdministradorController();
-	if($_GET['action']=='alta')
+	if($_GET['action']=='alta') //Accion de altaCliente
 	{
 		$controller->altaCliente();
 	}else
 	{
-		if ($_GET['action']=='verClientes') {
+		if ($_GET['action']=='verClientes')	//Accion de ver los clientes
+		{
 			$controller->verClientes();
 		}else
 		{
-			if ($_GET['action']=='agregarCuenta') {
+			if ($_GET['action']=='agregarCuenta') //Accion de agregar una cuenta
+			{
 				$controller->altaCuenta($_GET['id']);
 			}
 			else
 			{
-				if ($_GET['action']=='verCuentas')
+				if ($_GET['action']=='verCuentas')//Accion de ver las cuentas de los clientes
 				{
 					$controller->verCuentas($_GET['id']);
 				}
 				else
 				{
-					if ($_GET['action']=='depositarSueldo') {
+					if ($_GET['action']=='depositarSueldo') //Accion de depostitar el sueldo a un cliente
+					{
 						$controller->depositarSueldo($_GET['id']);
 					}
 				}
@@ -110,14 +143,19 @@ if (isset($_GET['action']))
 		}
 	}
 }
+/*******************************************************************************************
+*Chequeo de si se accedio al archivo con un pedido de POST(pedido de formulario), en caso afirmativo verifica que accion se desea realizar
+*********************************************************************************************/
 if (isset($_POST['action'])) 
 {
 	$controller= new AdministradorController();
 	//Si la accion es alta_cliente
-	if ($_POST['action']=='alta_cliente')
+	/*
+	Recibe el alta de un cliente por formulario
+	*/
+	if ($_POST['action']=='alta_cliente')	
 	{	
 		session_start();
-
 		chequeoAltaCliente();	//Funcion que chequea el alta cliente
 		require_once ($_SERVER['DOCUMENT_ROOT']."/hb/Models/Usuario.php");
 		//Creo un usuario para agregarlo a la base de datos	
@@ -126,7 +164,10 @@ if (isset($_POST['action']))
 		$controller->agregarCliente($usuario);
 	}else
 	{
-		if ($_POST['action']=='alta_cuenta')
+		/*
+		Recibe el alta de una cuenta por formulario 
+		*/
+		if ($_POST['action']=='alta_cuenta')	
 		{
 			session_start();
 			chequeoAltaCuenta();	//Funcion que chequea el alta de una cuenta
@@ -136,12 +177,14 @@ if (isset($_POST['action']))
 			$controller->agregarCuenta($cuenta);	//Llama al metodo que se va a encargar de agregar la cuenta
 		}else
 		{
+			/*
+			*Recibe el formulario de depositar sueldo
+			*/ 
 			if ($_POST['action']=='deposito_sueldo')
 			{
 				session_start();
 				chequeoDepositoSueldo(); //Funcion que chequea el deposito de sueldo
 				require_once($_SERVER['DOCUMENT_ROOT']."/hb/Models/Transaccion.php");
-
 				$transaccion=new Transaccion(null,null,$_POST['id_cuenta_destino'],'deposito',$_POST['monto'],date('Y-m-d H:i:s'));
 				$controller->realizarDeposito($transaccion);
 			}
@@ -149,81 +192,83 @@ if (isset($_POST['action']))
 	}
 }
 
-
+	/***************************************************
+	*Chequeo por parte del servidor del alta de un cliente
+	***************************************************/
 	function chequeoAltaCliente()
 	{
 		$formatoNombre_Usuario="/[a-z0-9]{6,}/i";  //Formato Nombre de usuario
 		$formatoDni_Cliente="/^\d{7,8}$/";//Formato DNI
 		$formatoClave_Cliente="/(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/";//Formato contraseña
 		$formatoNombreApe="/^[a-z]+(\s[a-z]+)*$/i";
+		$error=0; //Verifica si se produce algun error
 		//Chequeo campos vacios
-		if ($_POST['nombre_usuario']=='')
+		if ($_POST['nombre_cliente']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;	
+			$_SESSION['error-alta-cliente-nombre-vacio']= "<p>Error en el campo nombre, no puede estar vacio</p>";
+			$error=1;	
 		}
 		if($_POST['apellido_cliente']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;	
+			$_SESSION['error-alta-cliente-apellido-vacio']= "<p>Error en el campo apellido, no puede estar vacio</p>";
+			$error=1;	
 		}
 		if($_POST['nombre_usuario']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;
+			$_SESSION['error-alta-cliente-nombre_usuario-vacio']= "<p>Error en el campo nombre de usuario, no puede estar vacio</p>";
+			$error=1;	
 		}
 		if($_POST['dni_cliente']=='')
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;
+			$_SESSION['error-alta-cliente-dni-vacio']= "<p>Error en el campo dni, no puede estar vacio</p>";
+			$error=1;	
 		}
 		if(($_POST['clave_cliente']==''))
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de campos vacio</p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;
+			$_SESSION['error-alta-cliente-clave-vacio']= "<p>Error en el campo clave, no puede estar vacio</p>";
+			$error=1;	
 		}
+
 		//Verifica que el nombre de usuario sea correcto
 		if(!preg_match($formatoNombre_Usuario, $_POST['nombre_usuario']))
-		{
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;
+		{ 
+			$_SESSION['error-alta-cliente-formato-nombre']= "<p>Error de formato en el campo nombre de usuario, debe contener por lo menos 6 caracteres y que sean alfanumericos</p>";
+			$error=1;	
 		}
 		if(!preg_match($formatoNombreApe, $_POST['nombre_cliente']))
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;
+			$_SESSION['error-alta-cliente-formato-nombre_cliente']= "<p>Error de formato en el campo nombre del cliente, el nombre contiene caracteres que no son alfabéticos </p>";
+			$error=1;	
 		}
 		if(!preg_match($formatoNombreApe, $_POST['apellido_cliente']))
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;
+			$_SESSION['error-alta-cliente-formato-apellido']= "<p>Error de formato en el campo apellido, el apellido contiene caracteres que no son alfabéticos </p>";
+			$error=1;	
 		}
 
 		//Verifica que el DNI cumpla con las condiciones
 		if(!preg_match($formatoDni_Cliente, $_POST['dni_cliente']))
 		{	
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
-			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
-			exit;
+			$_SESSION['error-alta-cliente-formato-dni']= "<p>Error de formato en el campo DNI, el debe solo debe contener entre 7 y 8 caracteres numericos</p>";
+			$error=1;	
 		}
 
 		//Verifica que la contraseña este en el formato adecuado
 		if(!preg_match($formatoClave_Cliente, $_POST['clave_cliente']))
 		{
-			$_SESSION['error-alta-cliente']= "<p>Error de formato de nombre,apellido,nombre usuario, DNI o contraseña </p>";
+			$_SESSION['error-alta-cliente-formato-clave']= "<p>Error de formato en el campo contraseña, la contraseña debe contener al menos 6 caracteres, mayusculas y minusculas, por lo menos un simbolo y un numero </p>";
+			$error=1;	
+		}
+		if ($error)
+		{
 			header("Location: /hb/Views/Administrador/altaCliente.php");//imprimir y borrar el error en la vista
 			exit;
 		}
-	}
 
+	}
+	/*********************************************************************
+	*Chequeo por parte del servidor del alta de una cuenta para un cliente
+	**********************************************************************/
 	function chequeoAltaCuenta()
 	{
 		$regNombreCuenta= "/[^a-z]/i";	//Expresion regular del nombre de la cuenta
@@ -231,25 +276,30 @@ if (isset($_POST['action']))
 
 		$nombreCuenta= str_replace($regNombreCuenta,"",$_POST['nombre-cuenta']);
 		$alias= str_replace($regAlias,"",$_POST['alias']);
-
+		$error=0; 
 		//Si el nombre de cuenta no cumple el formato
 		if(strlen($nombreCuenta)<5)
 		{
-			$_SESSION['error-nombre-cuenta']= "<p> El nombre de la cuenta no puede estar vacio y debe contener por lo menos 5 caracteres alfabeticos</p>";	//Carga un error en SESSION
-			header("Location: /hb/Views/Administrador/altaCuenta.php");	//Recarga la pagina del formulario
-			exit;
+			$_SESSION['error-nombre-cuenta']= "<p> El nombre de la cuenta no puede estar vacio y debe contener por lo menos 5 caracteres alfabeticos</p>";	//Carga un error en SESSION		
+			$error=1;	
 		}
 
 		//Si el alias no cumple el formato
 		if (strlen($alias)<8) 
 		{
 			$_SESSION['error-alias']= "<p> El alias de la cuenta no puede estar vacio y debe contener por lo menos 8 caracteres alfabeticos</p>";	//Carga un error en SESSION
+			
+		}
+		if ($error)//Si se produce un error recarga el formulario par ael alta de una cuenta
+		{
 			header("Location: /hb/Views/Administrador/altaCuenta.php");	//Recarga la pagina del formulario
 			exit;
 		}
 
 	}
-
+	/*********************************************************************
+	*Chequo por parte del servidor del deposito de sueldo, debe ser mayor a 0
+	**********************************************************************/
 	function chequeoDepositoSueldo()
 	{
 		if ($_POST['monto'] <= 0) 

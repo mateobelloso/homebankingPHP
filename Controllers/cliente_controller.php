@@ -8,7 +8,9 @@ class ClienteController
 	public function __construct()
 	{
 	}
-
+	/********************************************
+	* Carga la vista de las cuentas de los clientes
+	****************************************/
 	public function index()
 	{
 		//Carga la vista 
@@ -21,6 +23,9 @@ class ClienteController
 		require_once('../Views/Cliente/cambioClave.php');
 	}
 	
+	/********************************************
+	* Cambia la contraseñadel cliente verificando que no ingrese la misma que la actual o que las contraseñas no coincidan
+	****************************************/
 	public function cambiarContraseña($usuario,$contraseñaActual)
 	{
 		require_once('../Models/Usuario.php');
@@ -76,7 +81,9 @@ if (isset($_POST['action'])) {
 		}
 	}
 }
-
+/***************
+*Si se envio el pedido por url (Ver historial)
+*/
 if (isset($_GET['action'])) 
 {
 	$controller= new ClienteController();

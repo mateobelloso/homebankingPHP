@@ -123,7 +123,9 @@ if(session_status()!= PHP_SESSION_ACTIVE)
 	}
 }
 
-// Se inicializa el login controler y se llama a autentificar usuario pasandole el usuario y la contraseña
+/*
+* Metodo post(recibe por formulario) Se inicializa el login controler y se llama a autentificar usuario pasandole el usuario y la contraseña
+*/
 if (isset($_POST['action'])) {
 		$controller= new LoginController();
 		require_once('../Models/Usuario.php');

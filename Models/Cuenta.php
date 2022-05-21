@@ -13,7 +13,9 @@ class Cuenta
 	public $fecha_hora;
 
 	private $db;
-
+	/***********
+	*Constructor de cuenta (Modelo de la base de datos)
+	************/ 
 	function __construct($id,$id_usuario,$nombre,$alias,$saldo,$fecha_hora)
 	{
 		$this->id=$id;
@@ -56,7 +58,7 @@ class Cuenta
 		}
 		return $listaCuentas;
 	}
-
+	/*Actualiza el saldo de una cuenta en la base de datos*/
 	public static function actualizarSaldo($idCuenta,$monto)
 	{
 		$db= Db::connect();

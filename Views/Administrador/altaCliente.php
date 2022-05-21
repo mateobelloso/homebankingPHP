@@ -66,8 +66,11 @@
 </style>
 
 <script>
+/****************************************************
+*Chequeo del alta cliente por parte de Java Script
+*****************************************************/
 function chequeoAltaCliente()
-	{	debugger
+	{
 		const regContraseña= /(?=.*[\W|\d_])(?=.*[a-z])(?=.*[A-Z]).{6,}/;	//Variable que va a controlar que la contraseña cumpla con el formato pedido
 		const regDNI= /^\d{7,8}$/; //Variable de validacion para el DNI
 		const regNombre_usuario= /[a-z0-9]{6,}/i; //Variable de validacion para el nombre de usuario
@@ -218,20 +221,16 @@ function chequeoAltaCliente()
 			<li id="error-generico" style="display: none;"><div class="error-mensajeError"><p>Corregir los campos erroneos antes de reenviar el formulario</p></div></li>
 
 				<!-- Imprimir mensaje de error de la verificacion del alta cliente por PHP-->
-			<?php if(isset($_SESSION['error-alta-cliente'])) { 
-			?>
-			
-					<li> 
-					<div class="error-mensajeError">
-					<?php 
-				 		echo $_SESSION['error-alta-cliente'];
-				 		unset($_SESSION['error-alta-cliente']); 
-				 	?> 
-				 	</div>
-					</li>
-
-					<?php }?>
-
+			<?php if(isset($_SESSION['error-alta-cliente-nombre-vacio'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-nombre-vacio'];unset($_SESSION['error-alta-cliente-nombre-vacio']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-apellido-vacio'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-apellido-vacio'];unset($_SESSION['error-alta-cliente-apellido-vacio']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-nombre_usuario-vacio'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-nombre_usuario-vacio'];unset($_SESSION['error-alta-cliente-nombre_usuario-vacio']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-dni-vacio'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-dni-vacio'];unset($_SESSION['error-alta-cliente-dni-vacio']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-clave-vacio'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-clave-vacio'];unset($_SESSION['error-alta-cliente-clave-vacio']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-formato-nombre'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-formato-nombre'];unset($_SESSION['error-alta-cliente-formato-nombre']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-formato-nombre_cliente'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-formato-nombre_cliente'];unset($_SESSION['error-alta-cliente-formato-nombre_cliente']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-formato-apellido'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-formato-apellido'];unset($_SESSION['error-alta-cliente-formato-apellido']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-formato-dni'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-formato-dni'];unset($_SESSION['error-alta-cliente-formato-dni']); ?> </div></li><?php }?>
+			<?php if(isset($_SESSION['error-alta-cliente-formato-clave'])) {?><li> <div class="error-mensajeError"><?php echo $_SESSION['error-alta-cliente-formato-clave'];unset($_SESSION['error-alta-cliente-formato-clave']); ?> </div></li><?php }?>
 			<li><button type="submit" class="submit">Agregar cliente</button></li>
 		</ul>
 	</form>
