@@ -57,7 +57,7 @@ class AdministradorController
 	{
 		require_once('../Models/Cuenta.php');
 		Transaccion::agregarDeposito($transaccion);
-		$this->verClientes();
+		$this->verCuentas(Cuenta::obtenerIdCliente($transaccion->id_cuenta_destino));
 	}
 	public function altaCuenta($id)
 	{

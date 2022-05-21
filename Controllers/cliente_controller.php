@@ -12,6 +12,8 @@ class ClienteController
 	public function index()
 	{
 		//Carga la vista 
+		require_once('../Models/Cuenta.php');
+		$cuentas= Cuenta::listarCuentasDeCliente($_SESSION['usuario']['id']);
 		require_once("../Views/Cliente/index.php");
 	}
 	public function cambioClave()
@@ -37,6 +39,13 @@ class ClienteController
 			require_once('../Views/Cliente/cambioClave.php');
 			echo "<script> mensajeErrorContraseñaIncorrecta() </script>";
 		}
+	}
+
+	public function verHistorial($idCuenta)
+	{
+		require_once('../Models/Transaccion.php');
+		$movimientos= Transaccion::listarHistorialCuenta($idCuenta);
+		require_once('../Views/Cliente/verHistorial.php');
 	}
 
 
@@ -65,6 +74,16 @@ if (isset($_POST['action'])) {
 			header('Location: ../Views/Cliente/cambioClave.php');
 			exit;
 		}
+	}
+}
+
+if (isset($_GET['action'])) 
+{
+	$controller= new ClienteController();
+	if ($_GET['action'] == 'verHistorial') 
+	{
+		session_start();
+		$controller->verHistorial($_GET['id']);
 	}
 }
 ?>

@@ -62,6 +62,15 @@ class Cuenta
 		$db= Db::connect();
 		$result= mysqli_query($db,"UPDATE cuentas SET saldo = saldo + '$monto' WHERE cuentas.id = '$idCuenta';");
 	}
+
+	//Obtiene el id de un cliente a traves de un id de una cuenta pasado como parametro
+	public static function obtenerIdCliente($idCuenta)
+	{
+		$db= Db::connect();
+		$result= mysqli_query($db,"SELECT id_usuario FROM cuentas WHERE id = '$idCuenta'");
+		$result= mysqli_fetch_array($result);
+		return $result['id_usuario'];
+	}
 }
 
 ?>
