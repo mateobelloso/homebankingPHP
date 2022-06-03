@@ -53,6 +53,14 @@ class ClienteController
 		require_once('../Views/Cliente/verHistorial.php');
 	}
 
+	//VISTA DE REALIZAR UNA TRANSFERENCIA
+	public function transferencia()
+	{
+		require_once('../Models/Cuenta.php');
+		$misCuentas= Cuenta::listarCuentasDeCliente($_SESSION['usuario']['id']);
+		require_once('../Views/Cliente/transferencia.php');
+	}
+
 
 }
 
@@ -91,6 +99,13 @@ if (isset($_GET['action']))
 	{
 		session_start();
 		$controller->verHistorial($_GET['id']);
+	}else
+	{
+		if ($_GET['action'] == 'hacerTransferencia') 
+		{
+			session_start();
+			$controller->transferencia();
+		}
 	}
 }
 ?>

@@ -67,6 +67,12 @@ class AdministradorController
 	****************************************************************/
 	public function depositarSueldo($idCuentaDestino)
 	{
+		//AGREGAR VALIDACION DE ID!!!!!!!
+		if(empty($idCuentaDestino))
+		{
+			header("Location: /hb/Controllers/administrador_controller.php?action=verClientes");
+			exit;
+		}
 		require_once('../Views/Administrador/depositarSueldo.php');
 	}
 	/*************************************************************
@@ -83,6 +89,11 @@ class AdministradorController
 	***********************************/
 	public function altaCuenta($id)
 	{
+		if(empty($id))
+		{
+			header("Location: /hb/Controllers/administrador_controller.php?action=verClientes");
+			exit;
+		}
 		require_once('../Views/Administrador/altaCuenta.php');
 	}
 
@@ -274,8 +285,10 @@ if (isset($_POST['action']))
 		$regNombreCuenta= "/[^a-z]/i";	//Expresion regular del nombre de la cuenta
 		$regAlias= "/[^a-z]/i";	//Expresion regular del alias
 
-		$nombreCuenta= str_replace($regNombreCuenta,"",$_POST['nombre-cuenta']);
-		$alias= str_replace($regAlias,"",$_POST['alias']);
+		$id= isset($_POST['id']) ? $_POST['id'] : "";
+
+		$nombreCuenta= preg_replace($regNombreCuenta,"",$_POST['nombre-cuenta']);
+		$alias= preg_replace($regAlias,"",$_POST['alias']);
 		$error=0; 
 		//Si el nombre de cuenta no cumple el formato
 		if(strlen($nombreCuenta)<5)
@@ -283,17 +296,30 @@ if (isset($_POST['action']))
 			$_SESSION['error-nombre-cuenta']= "<p> El nombre de la cuenta no puede estar vacio y debe contener por lo menos 5 caracteres alfabeticos</p>";	//Carga un error en SESSION		
 			$error=1;	
 		}
+		//Si no hay ningun id de cliente
+		if (strlen($id)==0) {
+			$_SESSION['error-no-hay-id']= "<p> Se produjo un error. Intente nuevamente</p>";
+			$error= 1;
+		}
 
 		//Si el alias no cumple el formato
 		if (strlen($alias)<8) 
 		{
 			$_SESSION['error-alias']= "<p> El alias de la cuenta no puede estar vacio y debe contener por lo menos 8 caracteres alfabeticos</p>";	//Carga un error en SESSION
-			
+			$error=1;
 		}
 		if ($error)//Si se produce un error recarga el formulario par ael alta de una cuenta
 		{
-			header("Location: /hb/Views/Administrador/altaCuenta.php");	//Recarga la pagina del formulario
-			exit;
+			if(strlen($id)!=0)
+			{
+				var_dump($id);
+				header("Location: /hb/Views/Administrador/altaCuenta.php?action=agregarCuenta&id=".$id);	//Recarga la pagina del formulario
+				exit;
+			}else
+			{
+				header("Location: /hb/Controllers/administrador_controller.php?action=verClientes");
+				exit;
+			}
 		}
 
 	}
@@ -302,6 +328,15 @@ if (isset($_POST['action']))
 	**********************************************************************/
 	function chequeoDepositoSueldo()
 	{
+		//AGREGAR QUE LLEGA UN ID!!!!
+		$id= isset($_POST['id_cuenta_destino']) ? $_POST['id_cuenta_destino'] : "";
+
+		if (strlen($id)) 
+		{
+			header("Location: /hb/Controllers/administrador_controller.php?action=verClientes");
+			exit;
+		}
+
 		if ($_POST['monto'] <= 0) 
 		{
 			$_SESSION['error-monto']= "<p>El monto debe ser mayor que cero.</p>";

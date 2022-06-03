@@ -27,6 +27,20 @@
 				</li>
 
 				<?php }?>
+		<!-- ERROR DE QUE NO HAY NINGUN ID DE CUENTA DESTINO PARA DEPOSITAR SUELDO -->
+		<?php if(isset($_SESSION['error-no-hay-id'])) { 
+		?>
+		
+				<li> 
+				<div class="error-mensajeError">
+				<?php 
+			 		echo $_SESSION['error-no-hay-id'];
+			 		unset($_SESSION['error-no-hay-id']); 
+			 	?> 
+			 	</div>
+				</li>
+
+				<?php }?>
 
 		<li><button type="submit" class="submit">Depositar Sueldo</button></li>
 	</ul>

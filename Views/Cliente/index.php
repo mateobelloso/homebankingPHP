@@ -1,5 +1,8 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'].'/hb/Views/header.php'); ?>
 <h1>¡Bienvenido <?php echo ucfirst($_SESSION['usuario']['nombre']) ?>!</h1><br> 
+
+<?php echo '<a href="cliente_controller.php?action=hacerTransferencia">Hacer una transferencia </a>'?>
+
 <h3>Tus cuentas:</h3>
 
 <table class="table">
