@@ -96,6 +96,42 @@ class Cuenta
 		$result= mysqli_fetch_array($result);
 		return $result['saldo'];
 	}
+
+// 	public static function verCuentasAntiguas ()
+// 	{	
+// 		$db= Db::connect();
+// 		$listaCuentasInactivas= [];
+// 		
+
+// REVISAR CONSULT SQL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//$result=SELECT DISTINCT c.id 
+// FROM cuentas c
+// INNER JOIN transacciones tdest ON tdest.id_cuenta_destino=c.id 
+// LEFT JOIN transacciones tor ON tor.id_cuenta_origen=c.id 
+
+// EXCEPT
+
+// (SELECT co.id 
+// FROM cuentas co
+// INNER JOIN transacciones tdest ON tdest.id_cuenta_destino=co.id 
+// WHERE (tdest.fecha_hora > (NOW()- INTERVAL 30 DAY))
+
+// UNION 
+ 
+// SELECT cd.id
+// FROM cuentas cd
+// INNER JOIN transacciones tor ON tor.id_cuenta_origen=cd.id 
+// WHERE(tor.fecha_hora > (NOW()- INTERVAL 30 DAY))
+// )
+
+// 		while($row=mysqli_fetch_array($result))
+// 		{
+// 			$listaCuentasInactivas[]= $row['id']+$row['id_usuario']+$row['nombre']+$row['alias']+$row['saldo']+$row['fecha_hora_ult_transacc'];
+
+// 		}
+// 		return 
+
+// 	}
 }
 
 ?>

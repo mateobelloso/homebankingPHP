@@ -18,6 +18,15 @@ class AdministradorController
 		require_once('../Views/Administrador/altaCliente.php');
 	}
 
+	public function verCuentasInactivas()
+	{	
+		session_start();
+		require_once('../Models/Cuenta.php');
+		//$cuentasInactivas= Cuenta::verCuentasAntiguas();
+		require_once('../Views/Administrador/verCuentaInactivas.php');
+	}
+
+
 	/******************************************************************
 	 * Funcion para agregar clientes verficando que el usuario no exista
 	********************************************************************/
@@ -75,6 +84,7 @@ class AdministradorController
 		}
 		require_once('../Views/Administrador/depositarSueldo.php');
 	}
+
 	/*************************************************************
 	*Funcion que realiza el deposito del sueldo
 	****************************************************************/
