@@ -73,6 +73,29 @@ class Cuenta
 		$result= mysqli_fetch_array($result);
 		return $result['id_usuario'];
 	}
+
+	public static function obtenerCuenta($alias)
+	{
+		$db= Db::connect();
+		$result= mysqli_query($db,"SELECT * FROM cuentas WHERE alias = '$alias'");
+		if(mysqli_num_rows($result) != 0)
+		{
+			$result= mysqli_fetch_array($result);
+			$cuenta= new Cuenta($result['id'],$result['id_usuario'],$result['nombre'],$result['alias'],$result['saldo'],$result['fecha_hora']);
+			return $cuenta;
+		}else
+		{
+			return null;
+		}
+	}
+
+	public static function obtenerSaldo($id)
+	{
+		$db= Db::connect();
+		$result= mysqli_query($db,"SELECT saldo FROM cuentas WHERE id = '$id'");
+		$result= mysqli_fetch_array($result);
+		return $result['saldo'];
+	}
 }
 
 ?>

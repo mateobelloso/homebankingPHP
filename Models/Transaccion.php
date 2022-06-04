@@ -28,8 +28,15 @@ class Transaccion
 	//Funcion que agrega una transaccion de tipo deposito a la base de datos
 	public static function agregarDeposito($transaccion)
 	{
-		$result= mysqli_query($transaccion->db,"INSERT INTO transacciones (id, id_cuenta_origen, id_cuenta_destino, tipo, monto, fecha_hora) VALUES (NULL, NULL, '$transaccion->id_cuenta_destino', 'deposito', '$transaccion->monto', '$transaccion->fecha_hora');");
+		$result= mysqli_query($transaccion->db,"INSERT INTO transacciones (id, id_cuenta_origen, id_cuenta_destino, tipo, monto, fecha_hora) VALUES (NULL, NULL, '$transaccion->id_cuenta_destino', '$transaccion->tipo', '$transaccion->monto','$transaccion->fecha_hora');");
 		Cuenta::actualizarSaldo($transaccion->id_cuenta_destino,$transaccion->monto);
+	}
+
+	public static function agregarTransferencia($transaccion)
+	{
+		$result= mysqli_query($transaccion->db,"INSERT INTO transacciones (id, id_cuenta_origen, id_cuenta_destino, tipo, monto, fecha_hora) VALUES (NULL, '$transaccion->id_cuenta_origen', '$transaccion->id_cuenta_destino', '$transaccion->tipo', '$transaccion->monto','$transaccion->fecha_hora');");
+		Cuenta::actualizarSaldo($transaccion->id_cuenta_destino,$transaccion->monto);
+		Cuenta::actualizarSaldo($transaccion->id_cuenta_origen,-$transaccion->monto);
 	}
 
 	public static function listarHistorialCuenta($idCuenta)

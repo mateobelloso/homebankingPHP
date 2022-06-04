@@ -7,6 +7,7 @@
 <form name="formulario" action="/hb/Controllers/administrador_controller.php" method="post" > 
 	<!--Return Chequeo: Llama a la funcion chequeo que verifica las validaciones necesarias para enviar el forumalario al cliente controller -->
 	<input type="hidden" name="action" value="alta_cuenta">
+
 	<input type="hidden" name="id" value="<?php echo $id ?>">
 	<ul>
 		<li><label for="nombre-cuenta">Nombre de la cuenta:</label><input type="text" id="nombre-cuenta" name="nombre-cuenta"></li>

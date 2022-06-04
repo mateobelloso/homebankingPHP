@@ -4,40 +4,47 @@
 
 <h1>Hacer una transferencia:</h1>
 
-<form name="formulario" action="/hb/Controllers/cliente_controller.php" method="post" onsubmit="return chequeoTransferencia()" > 
-	<!--Return Chequeo: Llama a la funcion chequeo que verifica las validaciones necesarias para enviar el forumalario al cliente controller -->
-	<input type="hidden" name="action" value="alta_cuenta">
+<table class="table">
+	<thead>
+		<th>Cuenta origen</th>
+		<th>Alias de cuenta destino</th>
+		<th>Monto</th>
+	</thead>
 
-	<input type="hidden" name="id" value="<?php echo $id ?>">
-	<ul>
-		<li><label for="cuenta-origen">Cuenta origen</label>
-			<select name="misCuentas" id="cuenta-origen">
+	<tbody>
+		<form name="formulario" action="/hb/Controllers/cliente_controller.php" method="post" onsubmit="return chequeoTransferencia()">
+			<input type="hidden" name="action" value="hacer-transferencia">
+			<tr>
+				<td><select name="misCuentas" id="cuenta-origen">
 				<?php foreach ($misCuentas as $cuenta){ ?>
 					<option value="<?php echo $cuenta->id.' - '.$cuenta->saldo ?>"><?php echo $cuenta->nombre." - ".$cuenta->alias." - Saldo: $".$cuenta->saldo ?></option>
 				<?php } ?>
-			</select>
-		</li>
-		<li><label for="cuenta-destino">Alias de cuenta destino</label><input type="text" id="alias-destino" name="alias-destino"></li>
-		<li><label for="monto">Monto</label><input type="number" id="monto" name="monto"></li>
-		<li><button type="submit" class="submit">Crear cuenta </button></li>
+			</select></td>
+				<td><input type="text" id="alias-destino" name="alias-destino"></td>
+				<td><input type="number" id="monto" name="monto"></td>
+			</tr>
+	</tbody>
+</table>
+	<button type="submit" class="submit">Hacer transferencia</button>
+	<ul>
 		<!-- Errores del lado del cliente y del servidor para el alta de cuenta de un cliente -->
-		<li id="error-nombre-cuenta" style="display: none;"><div class="error-mensajeError">El nombre de cuenta debe contener por lo menos 5 caracteres alfabeticos</div></li>
-		<li id="error-alias" style="display: none;"><div class="error-mensajeError">El alias debe contener por lo menos 8 caracteres alfabeticos</div></li>
-		<?php if(isset($_SESSION['error-nombre-cuenta'])) { ?>
-			<li id="error-nombre-cuenta"><div class="error-mensajeError">El nombre de cuenta debe contener por lo menos 5 caracteres alfabeticos</div></li>
-			<?php unset($_SESSION['error-nombre-cuenta']); ?>
+		<li id="error-monto-invalido" style="display: none;"><div class="error-mensajeError">El monto a transferir tiene que ser mayor a 0</div></li>
+		<li id="error-saldo-insuficiente" style="display: none;"><div class="error-mensajeError">El saldo de su cuenta es insuficiente para el monto que desea transferir</div></li>
+		<?php if(isset($_SESSION['error-alias-vacio'])) { ?>
+			<li><div class="error-mensajeError"><?php echo $_SESSION['error-alias-vacio'] ?></div></li>
+			<?php unset($_SESSION['error-alias-vacio']); ?>
 		<?php } ?>
-		<?php if(isset($_SESSION['error-alias'])) { ?>
-			<li id="error-alias"><div class="error-mensajeError">El alias debe contener por lo menos 8 caracteres alfabeticos</div></li>
-			<?php unset($_SESSION['error-alias']); ?>
+		<?php if(isset($_SESSION['error-monto-invalido'])) { ?>
+			<li><div class="error-mensajeError"><?php echo $_SESSION['error-monto-invalido'] ?></div></li>
+			<?php unset($_SESSION['error-monto-invalido']); ?>
 		<?php } ?>
-		<?php if(isset($_SESSION['error-no-hay-id'])) { ?>
-			<li id="error-no-hay-id"><div class="error-mensajeError">Hubo un error. Intente nuevamente.</div></li>
-			<?php unset($_SESSION['error-no-hay-id']); ?>
+		<?php if(isset($_SESSION['error-saldo-insuficiente'])) { ?>
+			<li><div class="error-mensajeError"><?php echo $_SESSION['error-saldo-insuficiente'] ?></div></li>
+			<?php unset($_SESSION['error-saldo-insuficiente']); ?>
 		<?php } ?>
-		<?php if(isset($_SESSION['error-existe-alias'])) { ?>
-			<li id="error-existe-alias"><div class="error-mensajeError">El alias ingresado ya esta en uso</div></li>
-			<?php unset($_SESSION['error-existe-alias']); ?>
+		<?php if(isset($_SESSION['error-alias-no-existe'])) { ?>
+			<li><div class="error-mensajeError"><?php echo $_SESSION['error-alias-no-existe'] ?></div></li>
+			<?php unset($_SESSION['error-alias-no-existe']); ?>
 		<?php } ?>
 	</ul>
 </form>

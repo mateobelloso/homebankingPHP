@@ -1,4 +1,9 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'].'/hb/Views/header.php'); ?>
+
+<?php if(isset($_SESSION['transferencia-exitosa'])) {
+	echo $_SESSION['transferencia-exitosa'];
+	unset($_SESSION['transferencia-exitosa']);
+} ?>
 <h1>¡Bienvenido <?php echo ucfirst($_SESSION['usuario']['nombre']) ?>!</h1><br> 
 
 <?php echo '<a href="cliente_controller.php?action=hacerTransferencia">Hacer una transferencia </a>'?>

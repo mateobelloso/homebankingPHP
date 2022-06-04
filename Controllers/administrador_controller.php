@@ -196,7 +196,7 @@ if (isset($_POST['action']))
 				session_start();
 				chequeoDepositoSueldo(); //Funcion que chequea el deposito de sueldo
 				require_once($_SERVER['DOCUMENT_ROOT']."/hb/Models/Transaccion.php");
-				$transaccion=new Transaccion(null,null,$_POST['id_cuenta_destino'],'deposito',$_POST['monto'],date('Y-m-d H:i:s'));
+				$transaccion=new Transaccion(NULL,NULL,$_POST['id_cuenta_destino'],'deposito',$_POST['monto'],date('Y-m-d H:i:s'));
 				$controller->realizarDeposito($transaccion);
 			}
 		}
@@ -331,7 +331,7 @@ if (isset($_POST['action']))
 		//AGREGAR QUE LLEGA UN ID!!!!
 		$id= isset($_POST['id_cuenta_destino']) ? $_POST['id_cuenta_destino'] : "";
 
-		if (strlen($id)) 
+		if (!strlen($id)) 
 		{
 			header("Location: /hb/Controllers/administrador_controller.php?action=verClientes");
 			exit;

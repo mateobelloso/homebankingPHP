@@ -1,9 +1,9 @@
 function chequeoTransferencia()
 {
-	const aliasDestino= document.getElementById("alias-destino");
-	const monto= document.getElementById("monto");
-	const cuentaOrigen= document.getElementById("cuenta-origen");
-	const saldo= cuentaOrigen.value.split("- ")[1];
+	var aliasDestino= document.getElementById("alias-destino");
+	var monto= document.getElementById("monto");
+	var cuentaOrigen= document.getElementById("cuenta-origen");
+	var saldo= cuentaOrigen.value.split("- ")[1];
 	var error= false;
 
 	debugger
@@ -17,22 +17,23 @@ function chequeoTransferencia()
 		aliasDestino.className= "blank-border";
 	}
 
+	
 	if (monto.value > saldo)
 	{
-		//document.getElementById("error-saldo-insuficiente").style.display= "block";
+		document.getElementById("error-saldo-insuficiente").style.display= "block";
 		error= true;
 	}else
 	{
-		//document.getElementById("error-saldo-insuficiente").style.display= "none";
+		document.getElementById("error-saldo-insuficiente").style.display= "none";
 	}
 
 	if (monto.value <= 0)
 	{
-		//document.getElementById("error-monto-invalido").style.display= "block";
+		document.getElementById("error-monto-invalido").style.display= "block";
 		error= true;
 	}else
 	{
-		//document.getElementById("error-monto-invalido").style.display= "none";
+		document.getElementById("error-monto-invalido").style.display= "none";
 	}
 
 	if (error)

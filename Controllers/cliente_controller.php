@@ -61,6 +61,26 @@ class ClienteController
 		require_once('../Views/Cliente/transferencia.php');
 	}
 
+	public function hacerTransferencia($idCuentaOrigen,$aliasDestino,$monto)
+	{
+		require_once('../Models/Cuenta.php');
+		$cuentaDestino= Cuenta::obtenerCuenta($aliasDestino);
+		if ($cuentaDestino != null)
+		{
+			require_once('../Models/Transaccion.php');
+			$fecha= date('Y-m-d H:i:s');
+			$transferencia= new Transaccion(NULL,$idCuentaOrigen,$cuentaDestino->id,'transferencia',$monto,$fecha);
+			Transaccion::agregarTransferencia($transferencia);
+			$_SESSION['transferencia-exitosa']= "<p>Su transferencia se realizo correctamente</p>";
+			$this->index();
+		}else
+		{
+			$_SESSION['error-alias-no-existe']= "<p>El alias al que desea transferir no existe.</p>";
+			header("Location: /hb/Controllers/cliente_controller.php?action=hacerTransferencia");
+			exit;
+		}
+	}
+
 
 }
 
@@ -87,6 +107,15 @@ if (isset($_POST['action'])) {
 			header('Location: ../Views/Cliente/cambioClave.php');
 			exit;
 		}
+	}else
+	{
+		if ($_POST['action'] == 'hacer-transferencia')
+		{
+			session_start();
+			$idCuentaOrigen= explode(" ", $_POST['misCuentas'])[0];
+			chequeoCamposTransferencia($idCuentaOrigen);
+			$controller->hacerTransferencia($_POST['misCuentas'],$_POST['alias-destino'],$_POST['monto']);
+		}
 	}
 }
 /***************
@@ -106,6 +135,36 @@ if (isset($_GET['action']))
 			session_start();
 			$controller->transferencia();
 		}
+	}
+}
+
+function chequeoCamposTransferencia($idCuentaOrigen)
+{
+	$error= false;
+
+	if (!strlen($_POST['alias-destino']))
+	{
+		$_SESSION['error-alias-vacio']= "<p>El campo de alias destino no puede estar vacio </p>";
+		$error= true;
+	}
+
+	if ($_POST['monto'] <= 0)
+	{
+		$_SESSION['error-monto-invalido']= "<p>El monto a transferir tiene que ser mayor a 0<p>";
+		$error= true;
+	}
+
+	require_once('../Models/Cuenta.php');
+	if ($_POST['monto'] > Cuenta::obtenerSaldo($idCuentaOrigen))
+	{
+		$_SESSION['error-saldo-insuficiente']= "<p>El saldo de su cuenta es insuficiente para el monto que desea transferir</p>";
+		$error= true;
+	}
+
+	if($error)
+	{
+		header("Location: /hb/Controllers/cliente_controller.php?action=hacerTransferencia");
+		exit;
 	}
 }
 ?>
