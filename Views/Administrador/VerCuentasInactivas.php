@@ -14,7 +14,7 @@
 	</thead>
 
 	<tbody>
-	  	<?php foreach ($cuentas as $cuenta) {?>	
+	  	<?php foreach ($cuentasInactivas as $cuenta) {?>	
 	  		<tr>	
 				<td><?php echo $cuenta->nombre ?></td>
 				<td><?php echo $cuenta->alias ?></td>

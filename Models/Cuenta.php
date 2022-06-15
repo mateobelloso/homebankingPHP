@@ -97,11 +97,52 @@ class Cuenta
 		return $result['saldo'];
 	}
 
-// 	public static function verCuentasAntiguas ()
-// 	{	
-// 		$db= Db::connect();
-// 		$listaCuentasInactivas= [];
-// 		
+	public static function ObtenerTodasLasCuentas()
+	{
+		$db= Db::connect();
+		$listaCuentas= [];
+		$result= mysqli_query($db,"SELECT * FROM cuentas");
+		while($row=mysqli_fetch_array($result))
+		{
+			$listaCuentas[]= new Cuenta($row['id'],$row['id_usuario'],$row['nombre'],$row['alias'],$row['saldo'],$row['fecha_hora']);
+		}
+		return $listaCuentas;
+	}
+
+	//IDEA DE LA FUNCION PRIMERO OBTENGO TODAS LAS CUENTAS ACTIVAS CON UNA SENTENCIA SQL, DESPUES OBTENGO TODAS LAS CUENTAS QUE EXISTEN, Y POR ULTIMO RECORRO EL LISTADO CON TODAS LAS CUENTAS QUE EXISTEN Y VOY PREGUNTANDO SI ESA CUENTA NO SE ENCUENTRA EN EL LISTADO DE CUENTAS ACTIVAS, SI NO SE ENCUENTRA LO AGREGO EN LA LISTA DE CUENTAS INACTIVAS. POR ULTIMO RETORNO ESE LISTADO DE CUENTAS INACTIVAS
+ 	public static function verCuentasAntiguas ()
+  	{	
+ 		$db= Db::connect();
+ 		$listaCuentasInactivas= [];
+ 		$listaCuentasActivas= [];
+ 		$fechaActual= date('Y-m-d H:i:s');
+ 		$fecha_antigua= date('Y-m-d H:i:s',strtotime($fechaActual."- 3 month"));
+ 		$result= mysqli_query($db,"SELECT DISTINCT c.id as id, c.id_usuario as id_usuario, c.nombre as nombre, c.alias as alias, c.saldo as saldo, c.fecha_hora as fecha_hora
+ 									FROM cuentas c
+ 									INNER JOIN transacciones tor ON tor.id_cuenta_origen = c.id
+ 									WHERE tor.fecha_hora > '$fecha_antigua'
+ 									UNION
+ 									SELECT DISTINCT c.id as id, c.id_usuario as id_usuario, c.nombre as nombre, c.alias as alias, c.saldo as saldo, c.fecha_hora as fecha_hora
+ 									FROM cuentas c
+ 									INNER JOIN transacciones tde ON tde.id_cuenta_destino = c.id
+ 									WHERE tde.fecha_hora > '$fecha_antigua'");
+ 		while($row=mysqli_fetch_array($result))
+ 		{
+ 			$listaCuentasActivas[]= new Cuenta($row['id'],$row['id_usuario'],$row['nombre'],$row['alias'],$row['saldo'],$row['fecha_hora']);
+ 		}
+ 		$listaCuentas = Cuenta::ObtenerTodasLasCuentas();
+ 		foreach ($listaCuentas as $cuenta) 
+ 		{
+ 			if(!in_array($cuenta, $listaCuentasActivas))
+ 			{
+ 				$listaCuentasInactivas[]= $cuenta;
+ 			}
+ 		}
+
+ 		return $listaCuentasInactivas;
+
+ 	}
+		
 
 // REVISAR CONSULT SQL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //$result=SELECT DISTINCT c.id 

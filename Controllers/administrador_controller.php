@@ -22,8 +22,8 @@ class AdministradorController
 	{	
 		session_start();
 		require_once('../Models/Cuenta.php');
-		//$cuentasInactivas= Cuenta::verCuentasAntiguas();
-		require_once('../Views/Administrador/verCuentaInactivas.php');
+		$cuentasInactivas= Cuenta::verCuentasAntiguas();
+		require_once('../Views/Administrador/verCuentasInactivas.php');
 	}
 
 
@@ -158,6 +158,12 @@ if (isset($_GET['action']))
 					if ($_GET['action']=='depositarSueldo') //Accion de depostitar el sueldo a un cliente
 					{
 						$controller->depositarSueldo($_GET['id']);
+					}else
+					{
+						if ($_GET['action']=='verCuentasInactivas')
+						{
+							$controller->verCuentasInactivas();
+						}
 					}
 				}
 			}

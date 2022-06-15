@@ -9,6 +9,7 @@
 	<h3>¿Que desea hacer?</h3>
 	<a href="administrador_controller.php?action=alta">Alta Cliente</a>
 	<a href="administrador_controller.php?action=verClientes">Ver clientes</a>
+	<a href="administrador_controller.php?action=verCuentasInactivas">Ver cuentas inactivas</a>
 	
 </body>
 </html>
