@@ -3,11 +3,10 @@ function chequeoTransferencia()
 	var aliasDestino= document.getElementById("alias-destino");
 	var monto= document.getElementById("monto");
 	var cuentaOrigen= document.getElementById("cuenta-origen");
-	var saldo= cuentaOrigen.value.split("- ")[1];
+	var saldo= parseInt(cuentaOrigen.value.split("- ")[1]);
 	var error= false;
 
 	debugger
-
 	if (!aliasDestino.value.length)
 	{
 		aliasDestino.className= "error-border";
@@ -18,7 +17,7 @@ function chequeoTransferencia()
 	}
 
 	
-	if (monto.value > saldo)
+	if (monto.valueAsNumber > saldo)
 	{
 		document.getElementById("error-saldo-insuficiente").style.display= "block";
 		error= true;
@@ -27,7 +26,7 @@ function chequeoTransferencia()
 		document.getElementById("error-saldo-insuficiente").style.display= "none";
 	}
 
-	if (monto.value <= 0)
+	if (monto.valueAsNumber <= 0)
 	{
 		document.getElementById("error-monto-invalido").style.display= "block";
 		error= true;

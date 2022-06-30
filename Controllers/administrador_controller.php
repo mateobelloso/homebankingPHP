@@ -19,8 +19,7 @@ class AdministradorController
 	}
 
 	public function verCuentasInactivas()
-	{	
-		session_start();
+	{
 		require_once('../Models/Cuenta.php');
 		$cuentasInactivas= Cuenta::verCuentasAntiguas();
 		require_once('../Views/Administrador/verCuentasInactivas.php');
@@ -68,6 +67,11 @@ class AdministradorController
 	public function verCuentas($id)
 	{
 		require_once('../Models/Cuenta.php');
+		if(empty($id))
+		{
+			header("Location: /hb/Controllers/administrador_controller.php?action=verClientes");
+			exit;
+		}
 		$cuentas= Cuenta::listarCuentasDeCliente($id);
 		require_once('../Views/Administrador/verCuentas.php');
 	}
@@ -124,6 +128,34 @@ class AdministradorController
 			$this->verClientes();	//Recarga la pagina a la tabla de los clientes	
 		}
 	}
+
+	/*******************************************************************************************
+	*Funcion para eliminar una cuenta de un usuario cliente
+	*********************************************************************************************/
+	public function eliminarCuenta($id)
+	{
+		require_once("../Models/Cuenta.php");
+		if(!empty($id))
+		{
+			$cuenta= Cuenta::obtenerCuentaPorId($id);
+			$cuentasAntiguas= Cuenta::verCuentasAntiguas();
+			if($cuenta != null)
+			{
+				if(in_array($cuenta, $cuentasAntiguas))
+				{
+					Cuenta::eliminarCuenta($id);
+					$_SESSION['mensaje-cuenta-eliminada']= "<p>La cuenta se elimino satisfactoriamente.</p>";
+				}else
+				{
+					$_SESSION['mensaje-cuenta-eliminada']= "<p>Hubo un error al querer eliminar esa cuenta. La cuenta que se desea borrar no es inactiva.</p>";
+				}
+			}else
+				{
+					$_SESSION['mensaje-cuenta-eliminada']= "<p>Hubo un error al querer eliminar esa cuenta.</p>";
+				}
+		}
+		$this->verCuentasInactivas();
+	}
 }	
 
 
@@ -163,6 +195,13 @@ if (isset($_GET['action']))
 						if ($_GET['action']=='verCuentasInactivas')
 						{
 							$controller->verCuentasInactivas();
+						}else
+						{
+							if($_GET['action']=='eliminarCuentaPorInactividad')
+							{
+								session_start();
+								$controller->eliminarCuenta($_GET['id']);
+							}
 						}
 					}
 				}

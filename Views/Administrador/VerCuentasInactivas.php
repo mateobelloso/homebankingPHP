@@ -1,5 +1,9 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'].'/hb/Views/header.php'); ?>
-<h1>¡Bienvenido <?php echo ucfirst($_SESSION['usuario']['nombre']) ?>!</h1><br> 
+<?php if(isset($_SESSION['mensaje-cuenta-eliminada']))
+		{	?>
+			<div><?php echo $_SESSION['mensaje-cuenta-eliminada']; ?></div>
+			<?php unset($_SESSION['mensaje-cuenta-eliminada']);
+		}	?>
 
 <h3>Cuentas antiguas de clientes:</h3>
 
@@ -20,7 +24,7 @@
 				<td><?php echo $cuenta->alias ?></td>
 	      		<td><?php echo $cuenta->saldo ?></td>
 	      		<td>
-	      			<?php echo '<a href="administrador_controller.php?action=eliminarCuentaPorInactividad&id='.$cuenta->id.'">Eliminar Cuenta</a>'?>
+	      			<a href="administrador_controller.php?action=eliminarCuentaPorInactividad&id=<?php echo $cuenta->id ?>" onclick="return confirm('Estas seguro que deseas eliminar la cuenta <?php echo $cuenta->alias ?>')">Eliminar cuenta</a>
 	      		</td>
 	    	</tr>
 	    <?php } ?>

@@ -112,6 +112,7 @@ if (isset($_POST['action'])) {
 		if ($_POST['action'] == 'hacer-transferencia')
 		{
 			session_start();
+			//Me quedo solo con el id de la cuenta origen del campo select del formulario
 			$idCuentaOrigen= explode(" ", $_POST['misCuentas'])[0];
 			chequeoCamposTransferencia($idCuentaOrigen);
 			$controller->hacerTransferencia($_POST['misCuentas'],$_POST['alias-destino'],$_POST['monto']);

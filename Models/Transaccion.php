@@ -51,6 +51,13 @@ class Transaccion
 		}
 		return $listaHistorial;
 	}
+
+	public static function eliminarTransacciones($idCuenta)
+	{
+		$db= Db::connect();
+		$result= mysqli_query($db,"DELETE FROM transacciones WHERE id_cuenta_origen = '$idCuenta';");
+		$result= mysqli_query($db,"DELETE FROM transacciones WHERE id_cuenta_destino = '$idCuenta';");
+	}
 }
 
 ?>

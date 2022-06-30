@@ -89,6 +89,21 @@ class Cuenta
 		}
 	}
 
+	public static function obtenerCuentaPorId($id)
+	{
+		$db= Db::connect();
+		$result= mysqli_query($db,"SELECT * FROM cuentas WHERE id = '$id'");
+		if(mysqli_num_rows($result) != 0)
+		{
+			$result= mysqli_fetch_array($result);
+			$cuenta= new Cuenta($result['id'],$result['id_usuario'],$result['nombre'],$result['alias'],$result['saldo'],$result['fecha_hora']);
+			return $cuenta;
+		}else
+		{
+			return null;
+		}
+	}
+
 	public static function obtenerSaldo($id)
 	{
 		$db= Db::connect();
@@ -142,37 +157,23 @@ class Cuenta
  		return $listaCuentasInactivas;
 
  	}
-		
 
-// REVISAR CONSULT SQL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//$result=SELECT DISTINCT c.id 
-// FROM cuentas c
-// INNER JOIN transacciones tdest ON tdest.id_cuenta_destino=c.id 
-// LEFT JOIN transacciones tor ON tor.id_cuenta_origen=c.id 
-
-// EXCEPT
-
-// (SELECT co.id 
-// FROM cuentas co
-// INNER JOIN transacciones tdest ON tdest.id_cuenta_destino=co.id 
-// WHERE (tdest.fecha_hora > (NOW()- INTERVAL 30 DAY))
-
-// UNION 
- 
-// SELECT cd.id
-// FROM cuentas cd
-// INNER JOIN transacciones tor ON tor.id_cuenta_origen=cd.id 
-// WHERE(tor.fecha_hora > (NOW()- INTERVAL 30 DAY))
-// )
-
-// 		while($row=mysqli_fetch_array($result))
-// 		{
-// 			$listaCuentasInactivas[]= $row['id']+$row['id_usuario']+$row['nombre']+$row['alias']+$row['saldo']+$row['fecha_hora_ult_transacc'];
-
-// 		}
-// 		return 
-
-// 	}
+ 	public static function eliminarCuenta($id)
+ 	{
+ 		$db= Db::connect();
+ 		$result= mysqli_query($db,"SELECT * FROM cuentas WHERE id = '$id'");
+ 		$result= mysqli_fetch_array($result);
+ 		if($result != null)
+ 		{
+ 			require_once('Transaccion.php');
+ 			Transaccion::eliminarTransacciones($id);
+ 			$result= mysqli_query($db,"DELETE FROM cuentas WHERE id = '$id'");
+ 			return 1;
+ 		}else
+ 		{
+ 			return null;
+ 		}
+ 	}
 }
 
 ?>
