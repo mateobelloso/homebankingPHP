@@ -2,6 +2,14 @@
 <link rel="stylesheet" type="text/css" href="/hb/Styles/form.css">
 <script type="text/javascript" src="/hb/Javascript/chequeoAltaCuenta.js"></script>
 
+<!--Chequeo para evitar accesos indebidos de un usuario a las funcionalidades del admin-->
+<?php
+	if($_SESSION['usuario']['tipo']!='empleado')
+	{
+		header("Location: /hb/Controllers/login_controller.php");
+	} 
+?>
+
 <h1>Agregar una cuenta:</h1>
 
 <form name="formulario" action="/hb/Controllers/administrador_controller.php" method="post" > 

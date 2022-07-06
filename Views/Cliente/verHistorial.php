@@ -1,4 +1,12 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'].'/hb/Views/header.php'); ?>
+<!--Chequeo para evitar accesos indebidos de un admin a las funcionalidades del cliente-->
+<?php
+	if($_SESSION['usuario']['tipo']!='comun')
+	{
+		header("Location: /hb/Controllers/login_controller.php");
+	} 
+?>
+
 <h1>¡Bienvenido <?php echo ucfirst($_SESSION['usuario']['nombre']) ?>!</h1><br> 
 <h3>Tus cuentas:</h3>
 
@@ -21,15 +29,15 @@
 
 	  	<?php foreach ($movimientos as $movimiento) {?>	
 	  		<tr>	
-				<td><?php echo $movimiento['fechaTransaccion'] ?></td>
-				<td><?php echo $movimiento['nombreCuentaOrigen'] ?></td>
-				<td><?php echo $movimiento['nombreOrigen'] ?></td>
-				<td><?php echo $movimiento['apellidoOrigen'] ?></td>
-				<td><?php echo $movimiento['tipo'] ?></td>
-				<td><?php echo $movimiento['nombreCuentaDestino'] ?></td>
-				<td><?php echo $movimiento['nombreDestino'] ?></td>
-				<td><?php echo $movimiento['apellidoDestino'] ?></td>
-				<td><?php echo $movimiento['monto'] ?></td>
+				<td style="text-align: center;" ><?php echo $movimiento['fechaTransaccion'] ?></td>
+				<td style="text-align: center;" ><?php echo $movimiento['nombreCuentaOrigen'] ?></td>
+				<td style="text-align: center;" ><?php echo $movimiento['nombreOrigen'] ?></td>
+				<td style="text-align: center;" ><?php echo $movimiento['apellidoOrigen'] ?></td>
+				<td style="text-align: center;" ><?php echo $movimiento['tipo'] ?></td>
+				<td style="text-align: center;"><?php echo $movimiento['nombreCuentaDestino'] ?></td>
+				<td style="text-align: center;" ><?php echo $movimiento['nombreDestino'] ?></td>
+				<td style="text-align: center;" > <?php echo $movimiento['apellidoDestino'] ?></td>
+				<td style="text-align: center;" ><?php echo $movimiento['monto'] ?></td>
 	    	</tr>
 	    <?php } ?>
 	</tbody>

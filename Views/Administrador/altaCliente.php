@@ -1,6 +1,13 @@
 	<?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
 	<link rel="stylesheet" type="text/css" href="/hb/Styles/form.css">
 	<script type="text/javascript" src="/hb/Javascript/chequeoAltaCliente.js"></script>
+<!--Chequeo para evitar accesos indebidos de un usuario a las funcionalidades del admin-->
+<?php
+	if($_SESSION['usuario']['tipo']!='empleado')
+	{
+		header("Location: /hb/Controllers/login_controller.php");
+	} 
+?>
 
 <h1>Agregar cliente</h1>
 

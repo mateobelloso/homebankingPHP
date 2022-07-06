@@ -2,6 +2,14 @@
 <link rel="stylesheet" type="text/css" href="/hb/Styles/form.css">
 <script type="text/javascript" src="/hb/Javascript/chequeoDepositoSueldo.js"></script>
 
+<!--Chequeo para evitar accesos indebidos de un usuario a las funcionalidades del admin-->
+<?php
+	if($_SESSION['usuario']['tipo']!='empleado')
+	{
+		header("Location: /hb/Controllers/login_controller.php");
+	} 
+?>
+
 <form name="formulario" action="/hb/Controllers/administrador_controller.php" method="post" onsubmit="return chequeoDepositoSueldo()"> 
 	<!--Return Chequeo: Llama a la funcion chequeo que verifica las validaciones necesarias para enviar el forumalario al administrador controller -->
 	<input type="hidden" name="action" value="deposito_sueldo">

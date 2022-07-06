@@ -1,7 +1,13 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT']."/hb/Views/header.php"); ?> <!--Se llama al header -->
 <link rel="stylesheet" type="text/css" href="/hb/Styles/form.css">
 <script type="text/javascript" src="/hb/Javascript/chequeoTransferencia.js"></script>
-
+<!--Chequeo para evitar accesos indebidos de un admin a las funcionalidades del cliente-->
+<?php
+	if($_SESSION['usuario']['tipo']!='comun')
+	{
+		header("Location: /hb/Controllers/login_controller.php");
+	} 
+?>
 <h1>Hacer una transferencia:</h1>
 
 <table class="table">

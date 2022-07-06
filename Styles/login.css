@@ -1,4 +1,5 @@
 /*Estetica mensaje de error al iniciar sesion con valores incorrectos  */
+/*# ID */
 #error {
 	color: black;
 	background-color: #F86157;
@@ -9,6 +10,7 @@
 }
 
 /*Estetica mensaje de error al iniciar sesion con valores incorrectos  */
+/* . Clase */
 .error {
 	color: black;
 	background-color: #F86157;
@@ -29,6 +31,7 @@ form {
 	margin-top: 10vw;
 }
 /*Estetica boton de iniciar sesion */
+/* Etiquetas HTML */
 button {
 	border-radius: 50px;
 	background-color: #2980B9;

@@ -3,6 +3,10 @@
   	{
   		session_start();
   	}
+	if( (!isset($_SESSION['usuario'])) && ($_SERVER['PHP_SELF']!='/hb/index.php') )
+	{
+		header("Location: /hb/index.php");
+	}
 
 ?>
 <html>
